@@ -28,7 +28,7 @@ const Auth = (props: Props) => {
   }, [user]);
 
   const onFinish = (values: any) => {
-    // console.log("Success:", values);
+    console.log("Success:", values);
     // dispatch the login action
     dispatch(login(values) as any);
   };
@@ -45,9 +45,22 @@ const Auth = (props: Props) => {
         </p>
         <div className={styles.formContainer}>
           <Form className={styles.form} form={form}>
-            <div className={styles.inputContainer}>
-              <Input placeholder="input Email" name="email" type="email" />
-            </div>
+            <Form.Item
+              className={styles.inputContainer}
+              name="userId"
+              rules={[
+                {
+                  required: true,
+                  message: "Please input your email!",
+                },
+                {
+                  type: "email",
+                  message: "Please enter a valid email!",
+                },
+              ]}
+            >
+              <Input placeholder="input Email" name="userId" type="email" />
+            </Form.Item>
             <div className={styles.inputContainer}>
               {/* label */}
               <Form.Item
@@ -70,7 +83,7 @@ const Auth = (props: Props) => {
               </Form.Item>
             </div>
             <div className={styles.buttonContainer}>
-              <Button className={styles.button} icon={<LockFilled />} onClick={onFinish}>
+              <Button className={styles.button} icon={<LockFilled />} onClick={() => onFinish(form.getFieldsValue())}>
                 Login
               </Button>
             </div>

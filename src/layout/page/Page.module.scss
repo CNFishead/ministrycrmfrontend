@@ -211,6 +211,7 @@
     .childrenContainer {
       position: relative;
       padding: 20px;
+      background-color: var(--quaternary-lighter);
     }
   }
   @include desktop {

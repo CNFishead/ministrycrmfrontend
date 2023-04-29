@@ -19,6 +19,7 @@ import { BiLogOutCircle } from "react-icons/bi";
 import { AiFillControl } from "react-icons/ai";
 import Auth from "@/screens/auth/Auth.view";
 import { Route } from "antd/es/breadcrumb/Breadcrumb";
+import User from "@/types/User";
 
 //make a type with children as a prop
 type Props = {
@@ -42,16 +43,10 @@ type Props = {
 const Page = (props: Props) => {
   const dispatch = useDispatch();
   const {
-    interface: {
-      sidebarClosed,
-      // controlLayoutOpen
-    },
+    interface: { sidebarClosed, controlLayoutOpen },
   } = useSelector((state: RootState) => state.interface);
   // pull the user data from the redux store
-  const {
-    // pull out user, but it may not exist
-    user: loggedInData,
-  } = useSelector((state: RootState) => state.auth);
+  const { user: loggedInData = {} as User } = useSelector((state: RootState) => state.auth);
   return (
     <>
       <Meta
@@ -77,21 +72,21 @@ const Page = (props: Props) => {
 
                 <Breadcrumb
                   className={styles.breadcrumb}
-                  itemRender={(route: any, params: any, routes: any, paths: any) => (
-                    <Link
-                      href={route.path}
-                      className={`${routes[routes.length - 1].breadcrumbName === route.breadcrumbName && styles.active}`}
-                    >
-                      {route.breadcrumbName}
-                    </Link>
-                  )}
-                  routes={
+                  // itemRender={(route: any, params: any, routes: any, paths: any) => (
+                  //   <Link
+                  //     href={route.path}
+                  //     className={`${routes[routes.length - 1].breadcrumbName === route.breadcrumbName && styles.active}`}
+                  //   >
+                  //     {route.breadcrumbName}
+                  //   </Link>
+                  // )}
+                  items={
                     props.pages?.map((page) => {
                       return {
-                        breadcrumbName: page.title,
-                        path: page.link || "",
+                        title: page.title,
+                        href: page.link || "",
                       };
-                    }) as Route[]
+                    }) as any[]
                   }
                 />
               </div>
@@ -113,8 +108,7 @@ const Page = (props: Props) => {
                       <div className={styles.userInfo}>
                         {/* <h1>{loggedInData.profile.organizationName} </h1> */}
                         <p>
-                          {/* {loggedInData.firstName}{' '}
-                          {loggedInData.lastName} */}
+                          {loggedInData.firstName} {loggedInData.lastName}
                         </p>
                       </div>
                     </div>
@@ -131,9 +125,9 @@ const Page = (props: Props) => {
             </div>
             <div className={styles.sideBar}>{props.pages && <SideBar page={props.pages[0]} large={props.largeSideBar} />}</div>
             <div
-            // className={`${styles.content} ${
-            //   controlLayoutOpen && styles.controlContainerActive
-            // } ${props.controlNav && styles.controlBarActive}`}
+              className={`${styles.content} ${controlLayoutOpen && styles.controlContainerActive} ${
+                props.controlNav && styles.controlBarActive
+              }`}
             >
               {props.controlNav && (
                 <>

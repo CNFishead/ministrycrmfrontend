@@ -1,3 +1,4 @@
+import User from "@/types/User";
 import {
   USER_REGISTER_REQUEST,
   USER_REGISTER_SUCCESS,
@@ -11,12 +12,18 @@ import {
   USER_UPDATE_FAILURE,
 } from "../constants/authConstants";
 
+interface AuthState {
+  user?: User;
+  loading?: boolean;
+  error?: any;
+}
+
 export const authReducer = (
   state = {
     user: undefined,
   },
-  action
-) => {
+  action: any
+): AuthState => {
   switch (action.type) {
     case USER_LOGIN_REQUEST:
     case USER_REGISTER_REQUEST:
@@ -37,9 +44,10 @@ export const authReducer = (
 
     case USER_UPDATE_SUCCESS:
       const updates = Object.keys(action.payload);
-      const updatedUser = { ...state.user };
+      // get the user from the state
+      const updatedUser = { ...state.user as any };
       updates.forEach((update) => (updatedUser[update] = action.payload[update]));
-      console.log(updatedUser);
+      // console.log(updatedUser);
 
       return {
         ...state,
