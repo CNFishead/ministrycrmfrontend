@@ -1,0 +1,241 @@
+@import "@/styles/globals.scss";
+.container {
+  display: grid;
+
+  grid-template-columns: 265px auto;
+  grid-template-rows: 70px auto;
+
+  width: 100%;
+  height: 100vh;
+
+  //   padding: 0 1rem;
+  background-color: #f5f5f5;
+  //   height: 100%;
+
+  grid-template-areas:
+    "sidebar header"
+    "sidebar content";
+
+  transition: all 0.5s cubic-bezier(0.5, -0.005, 0.2, 1) !important;
+  -webkit-transition: all 0.5s cubic-bezier(0.5, -0.005, 0.2, 1) !important;
+  &::after {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.71);
+    z-index: 2;
+    transition: all 0.2s ease-in-out;
+    opacity: 0;
+    pointer-events: none;
+  }
+  @include mobile {
+    grid-template-columns: auto;
+    grid-template-areas:
+      "header"
+      "content";
+    .sideBar {
+      position: fixed;
+      left: -100%;
+      z-index: 3;
+    }
+  }
+
+  &.sideBarActive {
+    @include mobile {
+      &::after {
+        opacity: 1;
+        pointer-events: all;
+      }
+    }
+
+    .sideBar {
+      left: 0;
+    }
+  }
+
+  .header {
+    grid-area: header;
+    background-color: white;
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 1.5rem;
+    font-size: 10px;
+    position: relative;
+    z-index: 2;
+    // height: 4.5rem;
+    box-shadow: rgba(33, 35, 38, 0.1) 0px 10px 10px -10px;
+
+    .headerLeft {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 20px;
+
+      .breadcrumb {
+        font-size: 20px;
+        font-weight: 700;
+        cursor: pointer;
+        .active {
+          color: var(--primary-light);
+        }
+      }
+
+      .hamburger {
+        display: none;
+        font-size: 20px;
+        align-items: center;
+        justify-content: center;
+        @include mobile {
+          cursor: pointer;
+          display: flex;
+        }
+      }
+    }
+    .headerRight {
+      padding-right: 10px;
+      .userContainer {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 20px;
+        .user {
+          gap: 10px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: black;
+
+          h1 {
+            font-size: 14px;
+          }
+          p {
+            font-size: 10px;
+            color: #717171;
+          }
+        }
+        .profilePicture {
+          border-radius: 50%;
+        }
+        .logoutIcon {
+          cursor: pointer;
+          font-size: 20px;
+          color: black;
+        }
+      }
+    }
+  }
+  .sideBar {
+    background-color: var(--primary-dark);
+    background: linear-gradient(180deg, var(--primary-dark) 0%, rgba(0, 0, 0, 0.989) 100%);
+    height: 100%;
+    grid-area: sidebar;
+    transition: all 0.5s cubic-bezier(0.5, -0.005, 0.2, 1) !important;
+    -webkit-transition: all 0.5s cubic-bezier(0.5, -0.005, 0.2, 1) !important;
+    width: auto;
+    transition: all 0.2s ease-in-out;
+    position: fixed;
+    // width: 70px;
+    width: 265px;
+    z-index: 4;
+  }
+  .content {
+    background-color: var(--primary-light);
+    height: 100%;
+    grid-area: content;
+
+    display: grid;
+    grid-template-rows: 1fr;
+    grid-template-columns: 1fr;
+
+    &.controlBarActive {
+      grid-template-columns: auto 1fr;
+    }
+
+    .controlContainer {
+      height: 100%;
+
+      transition: all 0.5s cubic-bezier(0.5, -0.005, 0.2, 1) !important;
+      -webkit-transition: all 0.5s cubic-bezier(0.5, -0.005, 0.2, 1) !important;
+      max-width: 100%;
+    }
+    .controlToggleBtn {
+      position: fixed;
+      bottom: 10px;
+      right: 10px;
+      width: 60px;
+      height: 60px;
+      padding: 15px;
+      font-size: 30px;
+      box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      border-radius: 50%;
+      background-color: var(--primary-dark);
+      z-index: 2;
+      cursor: pointer;
+      display: none;
+    }
+    @include mobile {
+      grid-template-columns: auto;
+
+      .controlContainer {
+        position: fixed;
+        left: -100%;
+        z-index: 1;
+        padding-bottom: 50px;
+      }
+      .controlToggleBtn {
+        display: flex;
+      }
+    }
+
+    &.controlContainerActive {
+      @include mobile {
+        &::after {
+          opacity: 1;
+          pointer-events: all;
+        }
+      }
+
+      .controlContainer {
+        left: 0;
+      }
+    }
+
+    .childrenContainer {
+      position: relative;
+      padding: 20px;
+    }
+  }
+  @include desktop {
+    @include tablet {
+      grid-template-columns: 70px auto;
+
+      .sideBar {
+        width: 70px;
+        &:hover {
+          width: fit-content;
+        }
+      }
+    }
+    &.small {
+      grid-template-columns: 70px auto;
+      @include mobile {
+        grid-template-columns: auto;
+      }
+
+      .sideBar {
+        width: 70px;
+        &:hover {
+          width: fit-content;
+        }
+      }
+    }
+  }
+}

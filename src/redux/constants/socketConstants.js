@@ -1,0 +1,8 @@
+// connect to socket
+export const SOCKET_CONNECT = "SOCKET_CONNECT";
+export const SOCKET_CONNECT_SUCCESS = "SOCKET_CONNECT_SUCCESS";
+export const SOCKET_DISCONNECT = "SOCKET_DISCONNECT";
+export const SOCKET_CONNECT_ERROR = "SOCKET_CONNECT_ERROR";
+
+// number of users online
+export const SOCKET_ONLINE_USERS = "SOCKET_ONLINE_USERS";

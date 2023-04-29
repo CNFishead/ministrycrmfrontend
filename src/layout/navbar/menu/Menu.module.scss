@@ -1,0 +1,82 @@
+.menu {
+  position: absolute;
+  z-index: 0;
+  margin-top: 10px;
+  margin-right: 0px;
+  transition: all 0.3s cubic-bezier(0.075, 0.82, 0.165, 1);
+  background-color: #207a9eed;
+  color: white;
+  backdrop-filter: blur(10px);
+  border-radius: 10px;
+  width: 100%;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  opacity: 0;
+  pointer-events: none;
+  top: -300px;
+
+  &.open {
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px,
+      rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+    top: -344px;
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  .menuHeader {
+    padding: 20px;
+
+    border-bottom: var(--bs-gray-300) 3px solid;
+    p {
+      margin-bottom: 5px;
+    }
+    .profileName {
+      font-weight: 800;
+      font-size: 1.2em;
+    }
+    .fullname {
+      font-weight: 400;
+      font-size: 0.9em;
+    }
+    .username {
+      font-weight: 300;
+      font-size: 0.9em;
+      color: var(--bs-gray-200);
+    }
+  }
+
+  .menuContainer {
+    padding: 30px;
+
+    .menuItems {
+      .linkWrapper {
+        margin-bottom: 20px;
+
+        .linkContainer {
+          display: flex;
+          align-items: center;
+          justify-content: flex-start;
+          color: white;
+          text-decoration: none;
+
+          &:hover {
+            color: rgb(228, 228, 228);
+            cursor: pointer;
+          }
+          .link {
+            font-weight: 900;
+            margin: 0;
+            margin-left: 10px;
+          }
+        }
+        .logOutBtn {
+          background-color: rgba(255, 255, 255, 0.173);
+
+          color: rgb(255, 255, 255);
+
+          border: var(--bs-gray-200) 0px solid;
+        }
+      }
+    }
+  }
+}

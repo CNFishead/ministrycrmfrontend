@@ -1,0 +1,4 @@
+export const GET_KEYS_REQUEST = 'GET_KEYS_REQUEST';
+export const GET_KEYS_SUCCESS = 'GET_KEYS_SUCCESS';
+export const GET_KEYS_FAILURE = 'GET_KEYS_FAILURE';
+export const GET_KEYS_RESET = 'GET_KEYS_RESET';

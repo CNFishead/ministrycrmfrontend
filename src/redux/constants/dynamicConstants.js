@@ -1,0 +1,23 @@
+export const DYNAMIC_CONTENT_REQUEST = "DYNAMIC_CONTENT_REQUEST";
+
+export const GET_LOGO = "GET_LOGO";
+export const UPDATE_LOGO = "UPDATE_LOGO";
+export const UPDATE_LOGO_RESET = "UPDATE_LOGO_RESET";
+
+export const GET_TOU = "GET_TOU";
+export const UPDATE_TOU = "UPDATE_TOU";
+export const UPDATE_TOU_RESET = "UPDATE_TOU_RESET";
+
+export const GET_PP = "GET_PP";
+export const UPDATE_PP = "UPDATE_PP";
+export const UPDATE_PP_RESET = "UPDATE_PP_RESET";
+
+export const SELECTED_LEGAL = "SELECTED_LEGAL";
+
+export const GET_BANNER = "GET_BANNER";
+export const UPDATE_DYNAMIC = "UPDATE_DYNAMIC";
+
+export const DYNAMIC_CONTENT_ERROR = "DYNAMIC_CONTENT_ERROR";
+export const DYNAMIC_CONTENT_RESET = "DYNAMIC_CONTENT_RESET";
+
+export const GET_NEWS_SUCCESS = "GET_NEWS_SUCCESS";
