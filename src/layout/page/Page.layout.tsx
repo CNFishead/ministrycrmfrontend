@@ -57,7 +57,10 @@ const Page = (props: Props) => {
         image={props.meta?.image}
       />
       <div className={`${styles.container} ${!props.largeSideBar ? "" : styles.small} ${sidebarClosed && styles.sideBarActive}`}>
-        {loggedInData ? (
+        {
+          // does not equal an empty object
+          loggedInData && Object.keys(loggedInData).length > 0
+         ? (
           <>
             <div className={styles.header}>
               <div className={styles.headerLeft}>
@@ -95,7 +98,7 @@ const Page = (props: Props) => {
                 <div className={styles.headerRight}>
                   <div className={styles.userContainer}>
                     <div className={styles.user}>
-                      {/* <Image
+                      <Image
                         src={loggedInData.profileImageUrl}
                         width={40}
                         height={40}
@@ -104,9 +107,9 @@ const Page = (props: Props) => {
                           objectFit: "cover",
                         }}
                         alt="logo"
-                      /> */}
+                      />
                       <div className={styles.userInfo}>
-                        {/* <h1>{loggedInData.profile.organizationName} </h1> */}
+                        <h1>{loggedInData?.ministry?.name} </h1>
                         <p>
                           {loggedInData.firstName} {loggedInData.lastName}
                         </p>

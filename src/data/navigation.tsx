@@ -34,4 +34,24 @@ export const navigation = {
     //   },
     // },
   },
+  ministries: {
+    title: 'Ministries',
+    links: {
+      ministries: {
+        title: 'Ministries',
+        link: '/ministries',
+        icon: <BsBox />,
+      },
+    }
+  },
+  account_details: {
+    title: 'Account Details',
+    links: {
+      account_details: {
+        title: 'Edit Account Settings',
+        link: '/account_details',
+        icon: <CgProfile />,
+      },
+    },
+  },
 };

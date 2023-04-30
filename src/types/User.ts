@@ -4,4 +4,9 @@ export default interface User {
   lastName: string;
   profileImageUrl: string;
   email: string;
+  ministry: {
+    name: string;
+    id: string;
+    
+  }
 }
