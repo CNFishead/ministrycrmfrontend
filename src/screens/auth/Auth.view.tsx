@@ -20,10 +20,8 @@ const Auth = (props: Props) => {
   const { user } = useSelector((state: RootState) => state.auth);
   const dispatch = useDispatch();
   React.useEffect(() => {
-    // check if the user is logged in
-    // if they are, redirect them to the dashboard
     if (user) {
-      router.push("/dashboard");
+      router.push("/");
     }
   }, [user]);
 

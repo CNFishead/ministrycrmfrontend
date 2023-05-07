@@ -11,6 +11,7 @@ export default (loginData) => async (dispatch) => {
       url: "/auth/login",
       data: loginData,
     });
+    console.log(data);
     dispatch({ type: USER_LOGIN_SUCCESS, payload: data.user });
     localStorage.setItem("user", JSON.stringify(data.user));
   } catch (error) {

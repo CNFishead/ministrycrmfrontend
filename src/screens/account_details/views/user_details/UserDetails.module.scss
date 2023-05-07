@@ -1,0 +1,24 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  .contentContainer {
+    padding: 1rem;
+    background-color: #ffffff;
+    height: 100%;
+    margin: 5px 5px;
+    width: 100%;
+    .nameContainer {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      .inputParent {
+        width: 48%;
+        .input {
+          width: 100%;
+        }
+      }
+    }
+  }
+}

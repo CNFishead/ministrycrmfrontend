@@ -23,7 +23,7 @@ import User from "@/types/User";
 
 //make a type with children as a prop
 type Props = {
-  children: React.ReactNode;
+  children?: React.ReactNode;
   pages: Array<{ title: string; link?: string; icon?: React.ReactNode }>;
   largeSideBar?: boolean;
   controlNav?: Array<{
@@ -31,11 +31,11 @@ type Props = {
     children: React.ReactNode;
   }>;
   meta?: {
-    title: string;
-    description: string;
-    keywords: string;
-    url: string;
-    image: string;
+    title?: string;
+    description?: string;
+    keywords?: string;
+    url?: string;
+    image?: string;
   };
   view?: string;
 };
@@ -56,44 +56,40 @@ const Page = (props: Props) => {
         url={props.meta?.url}
         image={props.meta?.image}
       />
-      <div className={`${styles.container} ${!props.largeSideBar ? "" : styles.small} ${sidebarClosed && styles.sideBarActive}`}>
-        {
-          // does not equal an empty object
-          loggedInData && Object.keys(loggedInData).length > 0
-         ? (
-          <>
-            <div className={styles.header}>
-              <div className={styles.headerLeft}>
-                <div
-                  className={styles.hamburger}
-                  onClick={() => {
-                    // toggleSideBar();
-                  }}
-                >
-                  <RxHamburgerMenu />
-                </div>
-
-                <Breadcrumb
-                  className={styles.breadcrumb}
-                  // itemRender={(route: any, params: any, routes: any, paths: any) => (
-                  //   <Link
-                  //     href={route.path}
-                  //     className={`${routes[routes.length - 1].breadcrumbName === route.breadcrumbName && styles.active}`}
-                  //   >
-                  //     {route.breadcrumbName}
-                  //   </Link>
-                  // )}
-                  items={
-                    props.pages?.map((page) => {
-                      return {
-                        title: page.title,
-                        href: page.link || "",
-                      };
-                    }) as any[]
-                  }
-                />
+      <div className={`${styles.container} ${!props.largeSideBar ? "" : styles.small} ${!sidebarClosed && styles.sideBarActive}`}>
+        <>
+          <div className={styles.header}>
+            <div className={styles.headerLeft}>
+              <div
+                className={styles.hamburger}
+                onClick={() => {
+                  dispatch(toggleSideBar() as any);
+                }}
+              >
+                <RxHamburgerMenu />
               </div>
 
+              <Breadcrumb
+                className={styles.breadcrumb}
+                // itemRender={(route: any, params: any, routes: any, paths: any) => (
+                //   <Link
+                //     href={route.path}
+                //     className={`${routes[routes.length - 1].breadcrumbName === route.breadcrumbName && styles.active}`}
+                //   >
+                //     {route.breadcrumbName}
+                //   </Link>
+                // )}
+                items={
+                  props.pages?.map((page) => {
+                    return {
+                      title: page?.title,
+                      href: page?.link || "",
+                    };
+                  }) as any[]
+                }
+              />
+            </div>
+            {Object.keys(loggedInData).length > 0 && (
               <div className={styles.headerRight}>
                 <div className={styles.headerRight}>
                   <div className={styles.userContainer}>
@@ -119,44 +115,39 @@ const Page = (props: Props) => {
                     <BiLogOutCircle
                       className={styles.logoutIcon}
                       onClick={() => {
-                        logout();
+                        dispatch(logout() as any);
                       }}
                     />
                   </div>
                 </div>
               </div>
+            )}
+          </div>
+          <div className={styles.sideBar}>{props.pages && <SideBar page={props.pages[0]} large={props.largeSideBar} />}</div>
+          <div
+            className={`${styles.content} ${controlLayoutOpen && styles.controlContainerActive} ${
+              props.controlNav && styles.controlBarActive
+            }`}
+          >
+            {props.controlNav && (
+              <>
+                <div className={styles.controlContainer}>
+                  <Control navigation={props.controlNav} />
+                </div>
+                <div
+                  className={styles.controlToggleBtn}
+                  // onClick={() => toggleControlLayout()}
+                >
+                  <AiFillControl />
+                </div>
+              </>
+            )}
+            <div className={styles.childrenContainer}>
+              <Alert />
+              {props.children}
             </div>
-            <div className={styles.sideBar}>{props.pages && <SideBar page={props.pages[0]} large={props.largeSideBar} />}</div>
-            <div
-              className={`${styles.content} ${controlLayoutOpen && styles.controlContainerActive} ${
-                props.controlNav && styles.controlBarActive
-              }`}
-            >
-              {props.controlNav && (
-                <>
-                  <div className={styles.controlContainer}>
-                    <Control navigation={props.controlNav} />
-                  </div>
-                  <div
-                    className={styles.controlToggleBtn}
-                    // onClick={() => toggleControlLayout()}
-                  >
-                    <AiFillControl />
-                  </div>
-                </>
-              )}
-              <div className={styles.childrenContainer}>
-                <Alert />
-                {props.children}
-              </div>
-            </div>
-          </>
-        ) : (
-          <>
-            <Alert />
-            <Auth />
-          </>
-        )}
+          </div>
+        </>
       </div>
     </>
   );
