@@ -7,6 +7,7 @@ import Image from "next/image";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { toggleSideBar } from "@/redux/actions/interface/toggleSideBar";
 import { useSelector } from "react-redux";
+import User from "@/types/User";
 
 //make a type with children as a prop
 type Props = {
@@ -18,7 +19,7 @@ const SideBar = (props: Props) => {
     interface: { sidebarClosed },
     // connectedUsers: { users },
   } = useSelector((state: any) => state.interface);
-
+  const { user } = useSelector((state: any) => state.auth);
   return (
     <div className={`${styles.container} ${!props.large ? "" : styles.small}`}>
       <div className={styles.logoContainer}>
@@ -57,7 +58,7 @@ const SideBar = (props: Props) => {
         {!props.large && <p>Shepherds CMS</p>}
       </div>
 
-      {Object.values(navigation({})).map((item: any) => {
+      {Object.values(navigation({ user })).map((item: any) => {
         return (
           <>
             {!item?.hidden && (

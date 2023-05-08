@@ -12,7 +12,7 @@ import {
   USER_UPDATE_FAILURE,
 } from "../constants/authConstants";
 
-interface AuthState {
+export interface AuthState {
   user?: User;
   loading?: boolean;
   error?: any;
@@ -20,10 +20,9 @@ interface AuthState {
 
 export const authReducer = (
   state = {
-    user: undefined,
-  },
+  }as AuthState,
   action: any
-): AuthState => {
+) => {
   switch (action.type) {
     case USER_LOGIN_REQUEST:
     case USER_REGISTER_REQUEST:

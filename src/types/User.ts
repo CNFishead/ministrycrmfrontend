@@ -7,6 +7,6 @@ export default interface User {
   ministry: {
     name: string;
     id: string;
-    
   }
+  role: string;
 }

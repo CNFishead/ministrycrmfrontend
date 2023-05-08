@@ -11,9 +11,11 @@ export default (loginData) => async (dispatch) => {
       url: "/auth/login",
       data: loginData,
     });
-    console.log(data);
+    // console.log(data);
     dispatch({ type: USER_LOGIN_SUCCESS, payload: data.user });
     localStorage.setItem("user", JSON.stringify(data.user));
+    // set the cookie
+    document.cookie = `user=${JSON.stringify(data.user)}; path=/; max-age=${60 * 60 * 24 * 7}`;
   } catch (error) {
     errorHandler(error, dispatch, USER_LOGIN_FAIL);
   }

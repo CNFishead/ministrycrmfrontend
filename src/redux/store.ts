@@ -5,13 +5,15 @@ import { useDispatch } from 'react-redux';
 
 const preloadedState = {
   // Add preloaded state here
+  auth: {
+    user: undefined,
+  },
 };
 
 export const store = configureStore({
   middleware: [thunk],
   reducer: rootReducer,
   devTools: process.env.NODE_ENV !== 'production',
-  preloadedState,
 });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
