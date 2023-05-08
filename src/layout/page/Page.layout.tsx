@@ -17,9 +17,9 @@ import Control from "../control/Control.layout";
 import logout from "@/redux/actions/auth/logout";
 import { BiLogOutCircle } from "react-icons/bi";
 import { AiFillControl } from "react-icons/ai";
-import Auth from "@/screens/auth/login/Login.view";
-import { Route } from "antd/es/breadcrumb/Breadcrumb";
+import cookie from "cookie";
 import User from "@/types/User";
+import { USER_LOGIN_SUCCESS } from "@/redux/constants/authConstants";
 
 //make a type with children as a prop
 type Props = {
@@ -47,6 +47,20 @@ const Page = (props: Props) => {
   } = useSelector((state: RootState) => state.interface);
   // pull the user data from the redux store
   const { user: loggedInData = {} as User } = useSelector((state: RootState) => state.auth);
+
+  // use useEffect, to check cookies
+  useEffect(() => {
+    // if there isnt a logged in user, check the cookies
+    if (Object.keys(loggedInData).length < 1) {
+      // check the cookies
+      const cookies = cookie.parse(document.cookie);
+      const user = cookies.user;
+      // if the user is found in the cookies, dispatch a login action
+      if (user) {
+        dispatch({ type: USER_LOGIN_SUCCESS, payload: JSON.parse(user) });
+      }
+    }
+  }, []);
   return (
     <>
       <Meta
