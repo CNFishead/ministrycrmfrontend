@@ -19,8 +19,7 @@ export interface AuthState {
 }
 
 export const authReducer = (
-  state = {
-  }as AuthState,
+  state = {} as AuthState,
   action: any
 ) => {
   switch (action.type) {

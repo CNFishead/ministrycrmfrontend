@@ -71,11 +71,11 @@ export const navigation = (options?: any) => {
           link: "/auth/forgotpassword",
           icon: <CgProfile />,
         },
-        reset_password: {
-          title: "Reset Password",
-          link: "/auth/resetpassword",
-          icon: <CgProfile />,
-        },
+        // reset_password: {
+        //   title: "Reset Password",
+        //   link: "/auth/resetpassword",
+        //   icon: <CgProfile />,
+        // },
       },
       hidden: options?.user ? true : false,
     },

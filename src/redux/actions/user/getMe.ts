@@ -7,10 +7,10 @@ export default () => async (dispatch: Dispatch) => {
   try {
     console.log(`firing action: getMe`)
     const {data} = await axios.get('/user/me');
-    console.log(data)
+    // console.log(data)
     dispatch({
       type: GET_USER_SUCCESS,
-      payload: data,
+      payload: data.user,
     });
   } catch (err) {
     console.log(err);

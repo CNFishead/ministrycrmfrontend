@@ -11,6 +11,7 @@ import Router from "next/router";
 import NProgress from "nprogress"; //nprogress module
 import "../styles/nprogress.css";
 import cookie from "cookie";
+import User from "@/types/User";
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   // show progress bar on route change
@@ -18,6 +19,8 @@ export default function MyApp({ Component, pageProps }: AppProps) {
   Router.events.on("routeChangeComplete", () => NProgress.done());
   Router.events.on("routeChangeError", () => NProgress.done());
   // console.log(`App started in ${process.env.ENV} mode`);
+
+  const { user = {} as User } = store.getState().auth;
   useEffect(() => {
     NProgress.configure({
       showSpinner: false,
@@ -28,17 +31,18 @@ export default function MyApp({ Component, pageProps }: AppProps) {
       trickleSpeed: 800,
     });
     // check the localStorage for a user object if it exists dispatch a login action
-    const user = localStorage.getItem("user");
-    if (user) {
+    // also use the cookie, cause it could be there.
+    if (!user) {
+      const localStorageUser = localStorage.getItem("user") || cookie.parse(document.cookie).user;
       // set the user in store to the user object in localStorage
       store.dispatch({
         type: USER_LOGIN_SUCCESS,
-        payload: JSON.parse(user),
+        payload: JSON.parse(localStorageUser),
       });
-
-      setAuthToken(JSON.parse(user).token);
+      setAuthToken(JSON.parse(localStorageUser).token);
     }
-  }, [store]);
+    setAuthToken(user.token);
+  }, [store, user]);
 
   return (
     <ReduxProvider store={store}>

@@ -9,4 +9,7 @@ export default interface User {
     id: string;
   }
   role: string;
+  username: string;
+  id: string;
+  phoneNumber: string;
 }

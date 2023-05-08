@@ -17,7 +17,7 @@ import Control from "../control/Control.layout";
 import logout from "@/redux/actions/auth/logout";
 import { BiLogOutCircle } from "react-icons/bi";
 import { AiFillControl } from "react-icons/ai";
-import Auth from "@/screens/auth/Auth.view";
+import Auth from "@/screens/auth/login/Login.view";
 import { Route } from "antd/es/breadcrumb/Breadcrumb";
 import User from "@/types/User";
 
@@ -102,7 +102,7 @@ const Page = (props: Props) => {
                         style={{
                           objectFit: "cover",
                         }}
-                        alt="logo"
+                        alt="profile image"
                       />
                       <div className={styles.userInfo}>
                         <h1>{loggedInData?.ministry?.name} </h1>
@@ -115,7 +115,7 @@ const Page = (props: Props) => {
                     <BiLogOutCircle
                       className={styles.logoutIcon}
                       onClick={() => {
-                        dispatch(logout() as any);
+                        dispatch(logout("/auth/login") as any);
                       }}
                     />
                   </div>

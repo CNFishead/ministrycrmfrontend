@@ -1,11 +1,10 @@
-import styles from "./Auth.module.scss";
-import Image from "next/image";
+import styles from "./Login.module.scss";
 // import { Button } from 'antd'
 import React from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { getAbsoluteUrl } from "@/utils/getAbsoluteUrl";
-import { Input, Form, Button } from "antd";
+import { Input, Form, Button, Image } from "antd";
 import { EyeInvisibleOutlined, EyeTwoTone, LockFilled } from "@ant-design/icons";
 import { RootState } from "@/redux/store";
 import { useDispatch, useSelector } from "react-redux";
@@ -34,9 +33,10 @@ const Auth = (props: Props) => {
   return (
     <div className={styles.wrapper}>
       <div className={styles.container}>
-        {/* <div className={styles.logoContainer}>
-          <p className={styles.logoText}>Shepherd's CRM</p>
-        </div> */}
+        <div className={styles.logoContainer}>
+          <Image src="/images/ShepherdsCMSLogo.png" width={200} height={200} preview={false} />
+          {/* <p className={styles.logoText}>Shepherd's CRM</p> */}
+        </div>
         <p className={styles.text}>
           <span>Welcome</span>
           <br />
@@ -88,7 +88,7 @@ const Auth = (props: Props) => {
             </div>
           </Form>
           <div className={styles.forgotPasswordContainer}>
-            <Link href="/forgot-password">
+            <Link href="/auth/forgotpassword">
               <p className={styles.forgotPassword}>Forgot Password?</p>
             </Link>
           </div>

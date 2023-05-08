@@ -1,7 +1,7 @@
 import PageLayout from "@/layout/page/Page.layout";
 import { navigation } from "@/data/navigation";
 import { useMediaQuery } from "react-responsive";
-import Auth from "@/screens/auth/Auth.view";
+import Auth from "@/screens/auth/login/Login.view";
 import { store } from "@/redux/store";
 
 export default function AuthScreen() {

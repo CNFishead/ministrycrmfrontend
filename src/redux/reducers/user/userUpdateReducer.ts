@@ -1,3 +1,4 @@
+import User from '@/types/User';
 import {
   UPDATE_USER_FAIL,
   UPDATE_USER_REQUEST,
@@ -5,7 +6,14 @@ import {
   UPDATE_USER_SUCCESS,
 } from '../../constants/userConstants';
 
-export default (state = {}, action) => {
+
+export interface UpdateState {
+  user?: User;
+  loading?: boolean;
+  error?: any;
+}
+
+export default (state = {} as UpdateState, action: any) => {
   switch (action.type) {
     case UPDATE_USER_REQUEST:
       return { loading: true };
