@@ -38,6 +38,11 @@ export const navigation = (options?: any) => {
           link: "/ministries",
           icon: <BsBox />,
         },
+        staff: {
+          title: "Staff",
+          link: "/staff",
+          icon: <BsFillPeopleFill />,
+        }
       },
       hidden: options?.user ? false : true,
     },

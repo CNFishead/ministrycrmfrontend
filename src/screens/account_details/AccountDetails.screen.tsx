@@ -9,9 +9,6 @@ const AccountDetails = () => {
       <div className={styles.contentContainer}>
         <UserDetails />
       </div>
-      <div className={styles.contentContainer}>
-        <MinistryDetails />
-      </div>
     </div>
   );
 };
