@@ -33,8 +33,13 @@ const UserDetails = (props: Props) => {
   }, [user]);
 
   const onFinish = (values: any) => {
-    // console.log(values);
-    dispatch(updateUser({ ...values, profileImageUrl: values.profileImageUrl.file.response.imageUrl }) as any);
+    console.log(values);
+    dispatch(
+      updateUser({
+        ...values,
+        profileImageUrl: values.profileImageUrl?.file?.response?.imageUrl || values.profileImageUrl,
+      }) as any
+    );
   };
 
   if (typeof window === "undefined" || loading)

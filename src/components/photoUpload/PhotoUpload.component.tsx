@@ -52,12 +52,11 @@ const PhotoUpload = (props: Props) => {
           "content-type": "multipart/form-data",
         },
       };
-      const response = await axios.post(`${process.env.API_URL}/upload`, formData, config);
-      console.log(response);
-      message.success(`${response.data.filename} uploaded successfully`);
+      const { data } = await axios.post(`${process.env.API_URL}/upload`, formData, config);
+      console.log(data);
+      message.success(`${data.filename} uploaded successfully`);
       // close the modal, and return the data
       Modal.destroyAll();
-      return Promise.resolve(response.data);
     } catch (error) {
       message.error("Upload failed");
       return Promise.reject(error);
@@ -88,7 +87,9 @@ const PhotoUpload = (props: Props) => {
             <CropperComponent
               imageSrc={image.src}
               onCrop={(blob: any) => {
-                handleCrop(blob, file.name);
+                handleCrop(blob, file.name).then(() => {
+                  resolve(blob);
+                });
               }}
             />
           );
@@ -109,7 +110,7 @@ const PhotoUpload = (props: Props) => {
           });
         };
       };
-      reader.readAsDataURL(file);
+      return reader.readAsDataURL(file);
     });
   };
 
@@ -127,11 +128,13 @@ const PhotoUpload = (props: Props) => {
   const handleChange: UploadProps["onChange"] = async (info: UploadChangeParam<UploadFile>) => {
     if (info.file.status === "uploading") {
       setLoading(true);
+      setImageUrl(undefined);
     }
     if (info.file.status === "done") {
       setLoading(false);
 
       // Get this url from response to display image preview
+      console.log(`info.file.response: ${JSON.stringify(info.file.response)}`);
       setImageUrl(info.file.response.imageUrl);
       message.success("Image Uploaded");
     }
