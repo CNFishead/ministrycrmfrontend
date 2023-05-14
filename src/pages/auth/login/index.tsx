@@ -7,9 +7,8 @@ import { store } from "@/redux/store";
 export default function AuthScreen() {
   // get the size of the screen using react-responsive useMediaQuery hook
   const isMobile = useMediaQuery({ query: "(max-width: 1024px)" });
-  const { user } = store.getState().auth;
   return (
-    <PageLayout pages={[navigation({ user }).auth.links.login]} largeSideBar={isMobile} meta={{ title: `CMS | Login` }}>
+    <PageLayout pages={[navigation().auth.links.login]} largeSideBar={isMobile} meta={{ title: `CMS | Login` }}>
       <Auth />
     </PageLayout>
   );

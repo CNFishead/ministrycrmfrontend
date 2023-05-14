@@ -1,40 +1,75 @@
 import React from "react";
 import styles from "./UserDetails.module.scss";
-import { Button, Form, Input, InputNumber } from "antd";
+import { Button, Card, Form, Input, InputNumber, Skeleton, Typography } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import getMe from "@/redux/actions/user/getMe";
 import { RootState } from "@/redux/store";
 import User from "@/types/User";
 import { FaSave } from "react-icons/fa";
 import updateUser from "@/redux/actions/user/updateUser";
+import PhotoUpload from "@/components/photoUpload/PhotoUpload.component";
 
-const UserDetails = () => {
+interface Props {
+  user?: User;
+  dispatch: any;
+  updateLoading: boolean;
+  loading: boolean;
+}
+const UserDetails = (props: Props) => {
   const [form] = Form.useForm();
   const dispatch = useDispatch();
+
   const {
-    userDetails: { user = {} as User },
-    userUpdate: { loading },
+    userDetails: { user, loading },
+    userUpdate: { loading: updateLoading },
   } = useSelector((state: RootState) => state.user);
 
+  const { user: loggedInUser } = useSelector((state: RootState) => state.auth);
+
   React.useEffect(() => {
-    // if the user object is empty
-    // by checking if the keys length is less than 1
-    if (Object.keys(user).length < 1) {
-      // get the user data
-      dispatch(getMe() as any);
-    }
-    if (user) {
-      // set the form values
-      form.setFieldsValue({ ...user });
-    }
+    if (!user) dispatch(getMe() as any);
+    // otherwise set form values
+    form.setFieldsValue({ ...user });
   }, [user]);
 
   const onFinish = (values: any) => {
-    dispatch(updateUser(values) as any);
+    // console.log(values);
+    dispatch(updateUser({ ...values, profileImageUrl: values.profileImageUrl.file.response.imageUrl }) as any);
   };
+
+  if (typeof window === "undefined" || loading)
+    return (
+      <Card title="Account Details" className={styles.container}>
+        <div className={styles.imageUploadContainer}>
+          <div className={styles.imageContainer}>
+            <PhotoUpload
+              listType="picture-card"
+              isAvatar={true}
+              action={`${process.env.API_URL}/upload`}
+              default={user?.profileImageUrl}
+              description="Upload a profile photo"
+              isLoading={loading}
+            />
+          </div>
+        </div>
+        <Skeleton active />
+      </Card>
+    );
   return (
-    <div className={styles.container}>
+    <Card title="Account Details" className={styles.container}>
       <Form form={form} layout="vertical" className={styles.contentContainer} onFinish={() => onFinish(form.getFieldsValue())}>
+        <div className={styles.imageUploadContainer}>
+          <div className={styles.imageContainer}>
+            <PhotoUpload
+              name="profileImageUrl"
+              listType="picture-card"
+              isAvatar={true}
+              action={`${process.env.API_URL}/upload`}
+              default={user?.profileImageUrl}
+              description="Upload a profile photo"
+            />
+          </div>
+        </div>
         {/* firstName and lastName should be on the same line */}
         <div className={styles.nameContainer}>
           <Form.Item name="firstName" className={styles.inputParent}>
@@ -72,13 +107,13 @@ const UserDetails = () => {
         </Form.Item>
         <div className={styles.buttonContainer}>
           <Form.Item>
-            <Button htmlType="submit" type="primary" className={styles.button} loading={loading} icon={<FaSave />}>
+            <Button htmlType="submit" type="primary" className={styles.button} loading={updateLoading} icon={<FaSave />}>
               Save
             </Button>
           </Form.Item>
         </div>
       </Form>
-    </div>
+    </Card>
   );
 };
 

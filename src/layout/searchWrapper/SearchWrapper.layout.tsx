@@ -103,7 +103,14 @@ const SearchWrapper = (props: Props) => {
 
       <div className={styles.childrenContainer}>
         <p className={styles.searchStats}>
-          {props?.total} items {search !== "" && <span>for {search}</span>}
+          {
+            // if the search text is not empty, show the search text, and the number of results
+            search && (
+              <span>
+              results for: {search} - {props?.total || 0} results
+              </span>
+            )
+          }
         </p>
         {props.children}
       </div>

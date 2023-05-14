@@ -29,7 +29,7 @@ export const checkAuthorization = (user: User, allowedRoles: string[]) => {
   // get the user from the redux store
   // split the users role into an array of strings
   const userRoles = user?.role?.split(' ');
-  console.log(userRoles)
+  // console.log(userRoles)
   // if there is no user or the user's role is not in the allowedRoles array, reject with an error object
   if (!user || !allowedRoles.some((role) => userRoles.includes(role))) {
     const error: AuthError = {

@@ -3,6 +3,7 @@ import axios from "@/utils/axios";
 import { errorHandler } from "@/utils/errorHandler";
 import { Dispatch } from "redux";
 import { setAlert } from "../alert";
+import { USER_LOGIN_SUCCESS } from "@/redux/constants/authConstants";
 
 export default (formData: any) => async (dispatch: Dispatch) => {
   try {
@@ -15,6 +16,13 @@ export default (formData: any) => async (dispatch: Dispatch) => {
     });
     // set the new user in localstorage
     localStorage.setItem('user', JSON.stringify(data.user));
+    // set the cookie
+    document.cookie = `user=${JSON.stringify(data.user)}; path=/; max-age=${60 * 60 * 24 * 7}`;
+    // finally dispatch the login action
+    dispatch({
+      type: USER_LOGIN_SUCCESS,
+      payload: data.user,
+    })
     dispatch(setAlert('User updated successfully', 'success') as any);
   } catch (err) {
     console.log(err);
