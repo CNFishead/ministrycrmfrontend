@@ -1,12 +1,11 @@
 import PageLayout from "@/layout/page/Page.layout";
 import { navigation } from "@/data/navigation";
 import { useMediaQuery } from "react-responsive";
-import { store } from "@/redux/store";
 import { checkAuthorization } from "@/components/privateRoute/PrivateRouteV2";
-import { USER_LOGIN_SUCCESS } from "@/redux/constants/authConstants";
 import User from "@/types/User";
 import cookie from "cookie";
 import { useSelector } from "react-redux";
+import { default as HomeScreen } from "@/screens/home/Home.Screen";
 import React from "react";
 
 interface Props {
@@ -15,13 +14,9 @@ interface Props {
 export default function Home(props: Props) {
   // get the size of the screen using react-responsive useMediaQuery hook
   const isMobile = useMediaQuery({ query: "(max-width: 1024px)" });
-  const { user = {} as User } = useSelector((state: any) => state.auth);
-  React.useEffect(() => {
-    // check if the user is authenticated
-  }, [user]);
   return (
-    <PageLayout pages={[navigation({ user }).home.links.home]} largeSideBar={isMobile}>
-      <h1>Home</h1>
+    <PageLayout pages={[navigation().home.links.home]} largeSideBar={isMobile}>
+      <HomeScreen />
     </PageLayout>
   );
 }

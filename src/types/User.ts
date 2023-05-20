@@ -1,5 +1,6 @@
 export default interface User {
   token: string;
+  fullName: string;
   firstName: string;
   lastName: string;
   profileImageUrl: string;

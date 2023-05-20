@@ -8,7 +8,7 @@ export default function Home() {
   // get the size of the screen using react-responsive useMediaQuery hook
   const isMobile = useMediaQuery({ query: "(max-width: 1024px)" });
   return (
-    <PageLayout pages={[navigation().ministries.links.ministries]} largeSideBar={isMobile}>
+    <PageLayout pages={[navigation().ministries.links.staff]} largeSideBar={isMobile}>
     </PageLayout>
   );
 }

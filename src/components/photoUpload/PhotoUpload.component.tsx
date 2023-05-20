@@ -30,9 +30,10 @@ const PhotoUpload = (props: Props) => {
   const inputRef = useRef<any>();
 
   const beforeUpload = async (file: RcFile) => {
-    const isJpgOrPng = file.type === "image/jpeg" || file.type === "image/png";
-    if (!isJpgOrPng) {
-      message.error("You can only upload JPG/PNG file");
+    // regex to test for image type (jpg, jpeg, png, webp)
+    const valid = /\.(jpe?g|png|webp)$/i.test(file.name);
+    if (!valid) {
+      message.error("You can only upload JPG, PNG & WEBP files!");
       return false;
     }
     const isLt10M = file.size / 1024 / 1024 < 10;

@@ -13,6 +13,7 @@ import "../styles/nprogress.css";
 import cookie from "cookie";
 import User from "@/types/User";
 import { SELECT_MINISTRY_SUCCESS } from "@/redux/constants/ministryConstants";
+import Ministry from "@/types/Ministry";
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   // show progress bar on route change
@@ -22,6 +23,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
   // console.log(`App started in ${process.env.ENV} mode`);
 
   const { user = {} as User } = store.getState().auth;
+  const { selectedMinistry } = store.getState().ministry;
   useEffect(() => {
     NProgress.configure({
       showSpinner: false,
@@ -35,23 +37,24 @@ export default function MyApp({ Component, pageProps }: AppProps) {
     // also use the cookie, cause it could be there.
     if (!user) {
       const localStorageUser = localStorage.getItem("user") || cookie.parse(document.cookie).user;
-      const localStorageMinistry = localStorage.getItem("ministry");
       // set the user in store to the user object in localStorage
       store.dispatch({
         type: USER_LOGIN_SUCCESS,
         payload: JSON.parse(localStorageUser),
       });
-      // set the ministry in store to the ministry object in localStorage
-      if (localStorageMinistry) {
-        store.dispatch({
-          type: SELECT_MINISTRY_SUCCESS,
-          payload: JSON.parse(localStorageMinistry!),
-        });
-      }
       setAuthToken(JSON.parse(localStorageUser).token);
     }
+    if (!selectedMinistry.ministry) {
+      const localStorageMinistry = localStorage.getItem("ministry");
+
+      // set the ministry in store to the ministry object in localStorage
+      store.dispatch({
+        type: SELECT_MINISTRY_SUCCESS,
+        payload: JSON.parse(localStorageMinistry!),
+      });
+    }
     setAuthToken(user.token);
-  }, [store, user]);
+  }, [store, user, selectedMinistry]);
 
   return (
     <ReduxProvider store={store}>

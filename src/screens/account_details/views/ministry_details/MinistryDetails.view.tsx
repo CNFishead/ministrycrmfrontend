@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./MinistryDetails.module.scss";
-import { Button, Card, Form, Input, InputNumber, Result, Select } from "antd";
+import { Button, Card, Form, Input, InputNumber, Result, Select, Skeleton } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import getMe from "@/redux/actions/user/getMe";
 import { RootState } from "@/redux/store";
@@ -13,6 +13,7 @@ import getMinistry from "@/redux/actions/ministry/getMinistry";
 import UserItem from "@/components/userItem/UserItem.component";
 import Error from "@/components/error/Error.component";
 import { MdError } from "react-icons/md";
+import updateMinistry from "@/redux/actions/ministry/updateMinistry";
 
 const MinistryDetails = () => {
   const [selectableOptions] = React.useState([
@@ -48,25 +49,34 @@ const MinistryDetails = () => {
   }, [ministry]);
 
   const onFinish = (values: any) => {
-    dispatch(updateUser(values) as any);
+    dispatch(updateMinistry(ministry._id, values, true) as any);
   };
 
-  if (loading) return <div>Loading...</div>;
+  if (loading)
+    return (
+      <Card title="Main Ministry Details" className={styles.container}>
+        <Skeleton active />
+      </Card>
+    );
   if (error)
     return (
       <Card title="Main Ministry Details" className={styles.container}>
-        <Error error={error}/>
+        <Error error={error} />
       </Card>
     );
   return (
     <Card title="Main Ministry Details" className={styles.container}>
-      <UserItem user={ministry?.leader} />
+      <div className={styles.leaderInformation}>
+        <h3>Ministry Leader</h3>
+        <UserItem user={ministry?.leader} />
+      </div>
       <Form form={form} layout="vertical" className={styles.contentContainer} onFinish={() => onFinish(form.getFieldsValue())}>
         <div className={styles.imageUploadContainer}>
           <div className={styles.imageContainer}>
             <PhotoUpload
               listType="picture-card"
               isAvatar={false}
+              name="ministryImageUrl"
               form={form}
               action={`${process.env.API_URL}/upload`}
               default={ministry?.ministryImageUrl}
