@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import Page from "@/layout/page/Page.layout";
 import { navigation } from "@/data/navigation";
+import { Button, Result } from "antd";
 
 export default function NotFound() {
   const navigate = useRouter();
@@ -25,15 +26,17 @@ export default function NotFound() {
 
   return (
     <Page pages={[navigation.home]} largeSideBar={true}>
-      <div style={{ margin: "15% auto", textAlign: "center" }}>
-        <div className="not-found-container container">
-          <div>
-            <h1>404 - Page Not Found</h1>
-            <p>
-              You will be redirected to <Link href="/">Homepage</Link> in {count}s
-            </p>
-          </div>
-        </div>
+      <div style={{}}>
+        <Result
+          status="404"
+          title="404"
+          subTitle={`Sorry, the page you visited does not exist. Redirecting to home page in ${count} seconds`}
+          extra={
+            <Button type="dashed" href="/">
+              Back Home
+            </Button>
+          }
+        />
       </div>
     </Page>
   );

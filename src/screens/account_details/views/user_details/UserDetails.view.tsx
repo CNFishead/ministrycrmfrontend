@@ -8,19 +8,14 @@ import User from "@/types/User";
 import { FaSave } from "react-icons/fa";
 import updateUser from "@/redux/actions/user/updateUser";
 import PhotoUpload from "@/components/photoUpload/PhotoUpload.component";
+import Error from "@/components/error/Error.component";
 
-interface Props {
-  user?: User;
-  dispatch: any;
-  updateLoading: boolean;
-  loading: boolean;
-}
-const UserDetails = (props: Props) => {
+const UserDetails = () => {
   const [form] = Form.useForm();
   const dispatch = useDispatch();
 
   const {
-    userDetails: { user, loading },
+    userDetails: { user, loading, error },
     userUpdate: { loading: updateLoading },
   } = useSelector((state: RootState) => state.user);
 
@@ -52,12 +47,17 @@ const UserDetails = (props: Props) => {
               isAvatar={true}
               action={`${process.env.API_URL}/upload`}
               default={user?.profileImageUrl}
-              description="Upload a profile photo"
-              isLoading={loading}
+              form={form}
             />
           </div>
         </div>
         <Skeleton active />
+      </Card>
+    );
+  if (error || !user)
+    return (
+      <Card title="Account Details" className={styles.container}>
+        <Error error={!user ? "No user object found, please try navigating away from the page and back" : error} />
       </Card>
     );
   return (
@@ -69,9 +69,10 @@ const UserDetails = (props: Props) => {
               name="profileImageUrl"
               listType="picture-card"
               isAvatar={true}
+              form={form}
               action={`${process.env.API_URL}/upload`}
               default={user?.profileImageUrl}
-              description="Upload a profile photo"
+              placeholder="Upload a profile photo"
             />
           </div>
         </div>

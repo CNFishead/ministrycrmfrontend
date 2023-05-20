@@ -13,21 +13,20 @@ import logout from "../redux/actions/auth/logout";
  * @modifiedBy - Austin Howard
  * @version - 1.0.0
  */
-export const errorHandler = (error: any, dispatch: Dispatch, constant?: any) => {
+export const errorHandler = (error: any, dispatch: Dispatch, constant?: any, dispatchMessage?: boolean) => {
   const message =
     error.response && error.response.data && error.response.data.message
       ? error.response.data.message
       : error.message
       ? error.message
       : "Something went wrong";
-  if (message === "Not authorized, token failed") {
-    dispatch(logout() as any);
-  }
   if (constant) {
     dispatch({
       type: constant,
       payload: message,
     });
   }
-  dispatch(setAlert(message, "error") as any);
+  if(dispatchMessage){
+    dispatch(setAlert(message, "error") as any);
+  }
 };

@@ -96,8 +96,10 @@ const Page = (props: Props) => {
                 items={
                   props.pages?.map((page) => {
                     return {
-                      title: page?.title,
-                      href: page?.link || "",
+                      // title: page?.title,
+                      // href: page?.link || "",
+                      // return next/link
+                      element: <Link href={page?.link || ""}>{page?.title}</Link>,
                     };
                   }) as any[]
                 }

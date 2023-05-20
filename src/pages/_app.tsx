@@ -12,6 +12,7 @@ import NProgress from "nprogress"; //nprogress module
 import "../styles/nprogress.css";
 import cookie from "cookie";
 import User from "@/types/User";
+import { SELECT_MINISTRY_SUCCESS } from "@/redux/constants/ministryConstants";
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   // show progress bar on route change
@@ -34,11 +35,19 @@ export default function MyApp({ Component, pageProps }: AppProps) {
     // also use the cookie, cause it could be there.
     if (!user) {
       const localStorageUser = localStorage.getItem("user") || cookie.parse(document.cookie).user;
+      const localStorageMinistry = localStorage.getItem("ministry");
       // set the user in store to the user object in localStorage
       store.dispatch({
         type: USER_LOGIN_SUCCESS,
         payload: JSON.parse(localStorageUser),
       });
+      // set the ministry in store to the ministry object in localStorage
+      if (localStorageMinistry) {
+        store.dispatch({
+          type: SELECT_MINISTRY_SUCCESS,
+          payload: JSON.parse(localStorageMinistry!),
+        });
+      }
       setAuthToken(JSON.parse(localStorageUser).token);
     }
     setAuthToken(user.token);
@@ -52,4 +61,3 @@ export default function MyApp({ Component, pageProps }: AppProps) {
     </ReduxProvider>
   );
 }
-

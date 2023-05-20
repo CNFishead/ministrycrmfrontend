@@ -11,10 +11,10 @@ const AccountDetails = () => {
   return (
     <div className={styles.container}>
       <div className={styles.contentContainer}>
-        <UserDetails  />
+        <UserDetails />
       </div>
       <div className={styles.contentContainer}>
-        {/* <MinistryDetails ministry={user?.ministry} loading={loading || false} updateLoading={updateLoading || false} dispatch={dispatch} /> */}
+        <MinistryDetails />
       </div>
     </div>
   );

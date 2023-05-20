@@ -1,13 +1,13 @@
 import User from '@/types/User';
 import { GET_USER_FAIL, GET_USER_REQUEST, GET_USER_RESET, GET_USER_SUCCESS } from '../../constants/userConstants';
 
-interface UserDetailsState {
+export interface IUserDetailsState {
   loading?: boolean;
   user?: User;
-  error?: any;
+  error?: string;
 }
 
-export default (state = {} as UserDetailsState, action: any) => {
+export default (state = {} as IUserDetailsState, action: any) => {
   switch (action.type) {
     case GET_USER_REQUEST:
       return { loading: true };
