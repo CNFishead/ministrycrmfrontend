@@ -3,12 +3,14 @@ import { navigation } from "@/data/navigation";
 import { useMediaQuery } from "react-responsive";
 import cookie from "cookie";
 import { checkAuthorization } from "@/components/privateRoute/PrivateRouteV2";
+import StaffScreen from "@/screens/staff/StaffPage.screen";
 
 export default function Home() {
   // get the size of the screen using react-responsive useMediaQuery hook
   const isMobile = useMediaQuery({ query: "(max-width: 1024px)" });
   return (
     <PageLayout pages={[navigation().ministries.links.staff]} largeSideBar={isMobile}>
+      <StaffScreen />
     </PageLayout>
   );
 }

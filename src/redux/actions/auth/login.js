@@ -2,7 +2,6 @@ import { SELECT_MINISTRY_SUCCESS } from "@/redux/constants/ministryConstants";
 import axios from "../../../utils/axios";
 import { errorHandler } from "../../../utils/errorHandler";
 import { USER_LOGIN_FAIL, USER_LOGIN_REQUEST, USER_LOGIN_SUCCESS } from "../../constants/authConstants";
-import { Dispatch } from "redux";
 
 export default (loginData) => async (dispatch) => {
   try {

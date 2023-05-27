@@ -1,5 +1,5 @@
 export const TOGGLE_SIDEBAR = 'TOGGLE_SIDEBAR';
-
+export const TOGGLE_CONTROL_LAYOUT = 'TOGGLE_CONTROL_LAYOUT';
 
 // Search Constants
 export const SET_SEARCH = 'SET_SEARCH';

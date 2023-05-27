@@ -9,7 +9,6 @@ const Home = () => {
   } = useSelector((state: RootState) => state.ministry);
   return (
     <div className={styles.container}>
-      <div className={styles.dynamicBackgroundContainer} style={{ backgroundImage: `url(${ministry?.ministryImageUrl}` }}></div>
       Home
     </div>
   );

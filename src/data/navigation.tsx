@@ -9,6 +9,7 @@ import { BsFillPeopleFill } from "react-icons/bs";
 
 import { IoAnalyticsSharp } from "react-icons/io5";
 import { SiGoogleanalytics } from "react-icons/si";
+import { AiOutlinePlus } from "react-icons/ai";
 
 export const navigation = (options?: any) => {
   return {
@@ -42,7 +43,19 @@ export const navigation = (options?: any) => {
           title: "Staff",
           link: "/staff",
           icon: <BsFillPeopleFill />,
-        }
+          sub_links: {
+            new_staff: {
+              title: "New Staff",
+              link: "/staff/new",
+              icon: (
+                <>
+                  <AiOutlinePlus />
+                  <BsFillPeopleFill />
+                </>
+              ),
+            },
+          },
+        },
       },
       hidden: options?.user ? false : true,
     },

@@ -19,6 +19,9 @@ const SideBar = (props: Props) => {
     interface: { sidebarClosed },
     // connectedUsers: { users },
   } = useSelector((state: any) => state.interface);
+  const {
+    selectedMinistry: { ministry },
+  } = useSelector((state: any) => state.ministry);
   const { user } = useSelector((state: any) => state.auth);
   return (
     <div className={`${styles.container} ${!props.large ? "" : styles.small}`}>
@@ -46,7 +49,7 @@ const SideBar = (props: Props) => {
         />
 
         <Image
-          src="/images/ShepherdsCMSLogo.png"
+          src={"/images/ShepherdsCMSLogo.png"}
           width={75}
           height={50}
           className={styles.logo + " " + styles.truthcastingLogo}

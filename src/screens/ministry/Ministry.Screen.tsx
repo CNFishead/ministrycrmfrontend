@@ -35,7 +35,6 @@ const Ministry = () => {
           },
         ]}
         placeholder="Search for videos"
-        queryKey="video-library"
         // total={totalData?.total}
       >
         <p>Hi</p>

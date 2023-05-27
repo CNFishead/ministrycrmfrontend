@@ -12,7 +12,7 @@ import NProgress from "nprogress"; //nprogress module
 import "../styles/nprogress.css";
 import cookie from "cookie";
 import User from "@/types/User";
-import { SELECT_MINISTRY_SUCCESS } from "@/redux/constants/ministryConstants";
+import { MAIN_MINISTRY_SUCCESS, SELECT_MINISTRY_SUCCESS } from "@/redux/constants/ministryConstants";
 import Ministry from "@/types/Ministry";
 
 export default function MyApp({ Component, pageProps }: AppProps) {
@@ -49,7 +49,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
 
       // set the ministry in store to the ministry object in localStorage
       store.dispatch({
-        type: SELECT_MINISTRY_SUCCESS,
+        type: MAIN_MINISTRY_SUCCESS,
         payload: JSON.parse(localStorageMinistry!),
       });
     }

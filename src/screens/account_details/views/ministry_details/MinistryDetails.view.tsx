@@ -36,7 +36,7 @@ const MinistryDetails = () => {
   const dispatch = useDispatch();
 
   const {
-    selectedMinistry: { ministry, loading, error },
+    mainMinistry: { ministry, loading, error },
   } = useSelector((state: RootState) => state.ministry);
 
   const { user: loggedInUser } = useSelector((state: RootState) => state.auth);

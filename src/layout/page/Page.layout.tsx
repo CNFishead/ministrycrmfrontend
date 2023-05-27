@@ -47,6 +47,10 @@ const Page = (props: Props) => {
   } = useSelector((state: RootState) => state.interface);
   // pull the user data from the redux store
   const { user: loggedInData = {} as User } = useSelector((state: RootState) => state.auth);
+  // pull the main ministry from the redux store
+  const {
+    mainMinistry: { ministry },
+  } = useSelector((state: RootState) => state.ministry);
 
   // use useEffect, to check cookies
   useEffect(() => {
@@ -96,10 +100,13 @@ const Page = (props: Props) => {
                 items={
                   props.pages?.map((page) => {
                     return {
-                      // title: page?.title,
-                      // href: page?.link || "",
-                      // return next/link
-                      element: <Link href={page?.link || ""}>{page?.title}</Link>,
+                      title: page?.title,
+                      href: page?.link || "",
+                      return: (
+                        <Link href={page?.link || ""}>
+                          <p className={styles.link}>{page?.title}</p>
+                        </Link>
+                      ),
                     };
                   }) as any[]
                 }
@@ -159,6 +166,7 @@ const Page = (props: Props) => {
               </>
             )}
             <div className={styles.childrenContainer}>
+              <div className={styles.dynamicBackgroundContainer} style={{ backgroundImage: `url(${ministry?.ministryImageUrl})` }}></div>
               <Alert />
               {props.children}
             </div>
