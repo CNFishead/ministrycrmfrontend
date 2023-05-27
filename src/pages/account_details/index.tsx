@@ -12,10 +12,9 @@ import { useSelector } from "react-redux";
 export default function Home() {
   // get the size of the screen using react-responsive useMediaQuery hook
   const isMobile = useMediaQuery({ query: "(max-width: 1024px)" });
-  const { user } = useSelector((state: RootState) => state.auth);
   return (
     <PageLayout pages={[navigation().account_details.links.account_details]} largeSideBar={isMobile}>
-      {user && <AccountDetails />}
+       <AccountDetails />
     </PageLayout>
   );
 }
