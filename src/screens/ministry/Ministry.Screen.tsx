@@ -1,42 +1,30 @@
 import React from "react";
 import styles from "./Ministry.module.scss";
 import SearchWrapper from "@/layout/searchWrapper/SearchWrapper.layout";
-import { AiOutlineUpload } from "react-icons/ai";
+import { AiOutlinePlus, AiOutlineUpload } from "react-icons/ai";
+import CreateNewMinistry from "./modal/createNewMinistry/CreateNewMinistry.modal";
 
 const Ministry = () => {
+  const [modalOpen, setModalOpen] = React.useState(true);
+
+
   return (
     <div className={styles.container}>
       <SearchWrapper
         buttons={[
           {
-            icon: <AiOutlineUpload className={styles.icon} />,
+            toolTip: "Create new Ministry",
+            icon: <AiOutlinePlus className={styles.icon} />,
             onClick: () => {
-              // setUploadModalOpen(true);
+              setModalOpen(true);
             },
             type: "primary",
           },
         ]}
-        filters={[
-          {
-            label: "Private",
-            key: "isPublic;false",
-          },
-          {
-            label: "Public",
-            key: "isPublic;true",
-          },
-          {
-            label: "Password Protected",
-            key: "isPasswordProtected;true",
-          },
-          {
-            label: "Paywall Protected",
-            key: "isPaywallProtected;true",
-          },
-        ]}
-        placeholder="Search for videos"
+        placeholder="Search for ministries"
         // total={totalData?.total}
       >
+        <CreateNewMinistry open={modalOpen} />
         <p>Hi</p>
       </SearchWrapper>
     </div>
