@@ -13,5 +13,6 @@ export default interface User {
   role: string;
   username: string;
   id: string;
+  _id: string;
   phoneNumber: string;
 }

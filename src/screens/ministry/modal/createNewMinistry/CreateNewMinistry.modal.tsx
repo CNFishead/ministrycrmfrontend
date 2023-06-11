@@ -1,50 +1,86 @@
-import React from 'react'
-import styles from './CreateNewMinistry.module.scss'
-import { Form, Input, Modal, Select } from 'antd'
-import { Dispatch } from 'redux'
+import React from "react";
+import styles from "./CreateNewMinistry.module.scss";
+import { Button, Card, Form, Input, Modal, Select } from "antd";
+import { Dispatch } from "redux";
+import selectableMinistryTypes from "@/data/selectableMinistryTypes";
+import UserItem from "@/components/userItem/UserItem.component";
+import PhotoUpload from "@/components/photoUpload/PhotoUpload.component";
+import { FaSave } from "react-icons/fa";
+import Ministry from "@/types/Ministry";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
+import User from "@/types/User";
 
 interface Props {
-  open: boolean,
-  dispatch?: Dispatch
+  open: boolean;
+  dispatch?: Dispatch;
 }
-const CreateNewMinistry = ({open}: Props) => {
-  const [form] = Form.useForm()
+const CreateNewMinistry = ({ open }: Props) => {
+  const [form] = Form.useForm();
+  const selectableOptions = selectableMinistryTypes();
   const onFinish = (values: any) => {
-    console.log(values)
-  }
-  return (
-    <Modal className={styles.container} open={open}>
-      <div className={styles.modalHeader}>
-      <h1>Create New Ministry</h1></div>
-      <Form form={form} layout="vertical" onFinish={onFinish}>
-        <Form.Item
-          label="Ministry Name"
-          name="name"
-          rules={[{ required: true, message: "Please input the ministry name!" }]}
-        >
-          <Input placeholder="Enter the ministry name" />
-        </Form.Item>
-        <Form.Item
-          label="Ministry Description"
-          name="description"
-          rules={[{ required: true, message: "Please input the ministry description!" }]}
-        >
-          <Input.TextArea placeholder="Enter the ministry description" />
-        </Form.Item>
-        <Form.Item
-          label="Ministry Leader"
-          name="leader"
-          rules={[{ required: true, message: "Please input the ministry leader!" }]}
-        >
-          <Input placeholder="Enter the ministry leader" />
-        </Form.Item>
-        <Select placeholder="What type of ministry is this?">
-          <Select.Option value="evangelism">Evangelism</Select.Option>
-          <Select.Option value="prayer">Prayer</Select.Option>
-          </Select>
-        </Form>
-    </Modal>
-  )
-}
+    console.log(values);
+  };
 
-export default CreateNewMinistry
+  const {
+    userList: { users },
+  } = useSelector((state: RootState) => state.user);
+
+  return (
+    <Modal className={styles.container} open={open} closeIcon={true}>
+      <Card title="Create New Ministry" className={styles.container}>
+        {form.getFieldsValue().leader && (
+          <div className={styles.leaderInformation}>
+            <h3>Ministry Leader</h3>
+            <UserItem user={form.getFieldsValue().leader as any} />
+          </div>
+        )}
+        <Form form={form} layout="vertical" className={styles.contentContainer} onFinish={() => onFinish(form.getFieldsValue())}>
+          <div className={styles.imageUploadContainer}>
+            <div className={styles.imageContainer}>
+              <PhotoUpload
+                listType="picture-card"
+                isAvatar={false}
+                label="Ministry Banner Image"
+                name="ministryImageUrl"
+                form={form}
+                action={`${process.env.API_URL}/upload`}
+                default={form.getFieldsValue().ministryImageUrl}
+              />
+            </div>
+          </div>
+          {/* firstName and lastName should be on the same line */}
+          <Form.Item name="name" className={styles.inputParent}>
+            <Input type="text" addonBefore="Ministry Name" className={styles.input} />
+          </Form.Item>
+          <Form.Item name="description" className={styles.inputParent}>
+            <Input.TextArea rows={4} className={styles.input} placeholder="Ministry Bio/Mission" />
+          </Form.Item>
+          <Form.Item name="ministryType" className={styles.inputParent} label="Ministry Type">
+            <Select placeholder="Select Ministry Type" className={styles.input} defaultValue={form.getFieldsValue().ministryType}>
+              {selectableOptions.map((option) => (
+                <Select.Option key={option.value} value={option.value}>
+                  {option.label}
+                </Select.Option>
+              ))}
+            </Select>
+          </Form.Item>
+          <Form.Item name="leader" className={styles.inputParent} label="Ministry Leader">
+            <Select
+              onChange={() => console.log("changed")}
+              onSearch={() => console.log("searched")}
+              showSearch
+              placeholder="Select Ministry Leader"
+              className={styles.input}
+              defaultValue={form.getFieldsValue().leader}
+              options={users?.map((user: User) => ({ label: `${user.firstName} ${user.lastName}`, value: user._id }))}
+            >
+            </Select>
+          </Form.Item>
+        </Form>
+      </Card>
+    </Modal>
+  );
+};
+
+export default CreateNewMinistry;

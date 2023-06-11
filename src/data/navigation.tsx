@@ -32,7 +32,7 @@ export const navigation = (options?: any) => {
       // },
     },
     ministries: {
-      title: "Ministries",
+      title: "Ministry Details",
       links: {
         ministries: {
           title: "Ministries",
@@ -55,6 +55,11 @@ export const navigation = (options?: any) => {
               ),
             },
           },
+        },
+        members: {
+          title: "Members",
+          link: "/members",
+          icon: <BsFillPeopleFill />,
         },
       },
       hidden: options?.user ? false : true,

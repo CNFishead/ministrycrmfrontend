@@ -5,6 +5,7 @@ import { AiFillFilter } from "react-icons/ai";
 import type { MenuProps } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { MODIFY_FILTER, REMOVE_FILTER, SET_PAGE_LIMIT, SET_PAGE_NUMBER, SET_SEARCH } from "@/redux/constants/interfaceConstants";
+import Link from "next/link";
 
 const { Search } = Input;
 
@@ -13,6 +14,7 @@ type Props = {
     icon: React.ReactNode;
     onClick: () => void;
     type: "text" | "primary" | "ghost" | "dashed" | "link" | "default";
+    href?: string;
     toolTip?: string;
   }[];
   filters?: {
@@ -36,6 +38,7 @@ const SearchWrapper = (props: Props) => {
   useEffect(() => {
     // dispatch the action to reset data
     if (!props.action) return;
+    console.log(`search: ${search}, pageNumber: ${pageNumber}, pageLimit: ${pageLimit}, filter: ${filter}`);
     dispatch(props.action(search, pageNumber, pageLimit, filter) as any);
   }, [search, pageNumber, pageLimit, filter]);
 
@@ -93,9 +96,17 @@ const SearchWrapper = (props: Props) => {
           )}
           {props.buttons.map((button, indx) => (
             <Tooltip key={button.type} title={button.toolTip} placement="bottomRight">
-              <Button type={button.type} shape="round" className={styles.button} onClick={button.onClick}>
-                {button.icon}
-              </Button>
+              {button.href ? (
+                <Link href={button.href}>
+                    <Button type={button.type} shape="round" className={styles.button} onClick={button.onClick}>
+                      {button.icon}
+                    </Button>
+                </Link>
+              ) : (
+                <Button type={button.type} shape="round" className={styles.button} onClick={button.onClick}>
+                  {button.icon}
+                </Button>
+              )}
             </Tooltip>
           ))}
         </div>
@@ -107,7 +118,7 @@ const SearchWrapper = (props: Props) => {
             // if the search text is not empty, show the search text, and the number of results
             search && (
               <span>
-              results for: {search} - {props?.total || 0} results
+                results for: {search} - {props?.total || 0} results
               </span>
             )
           }

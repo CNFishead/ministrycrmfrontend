@@ -14,24 +14,10 @@ import UserItem from "@/components/userItem/UserItem.component";
 import Error from "@/components/error/Error.component";
 import { MdError } from "react-icons/md";
 import updateMinistry from "@/redux/actions/ministry/updateMinistry";
+import selectableMinistryTypes from "@/data/selectableMinistryTypes";
 
 const MinistryDetails = () => {
-  const [selectableOptions] = React.useState([
-    { label: "Church", value: "church" },
-    { label: "School", value: "school" },
-    { label: "Small Group", value: "small group" },
-    { label: "Hospital", value: "hospital" },
-    { label: "Missionary ", value: "missionary" },
-    { label: "Women's Ministry", value: "women's ministry" },
-    { label: "Men's Ministry", value: "men's ministry" },
-    { label: "Youth Ministry", value: "youth ministry" },
-    { label: "Children's Ministry", value: "children's ministry" },
-    { label: "Prison Ministry", value: "prison ministry" },
-    { label: "Worship Ministry", value: "worship ministry" },
-    { label: "Counseling Ministry", value: "counseling ministry" },
-    { label: "Other", value: "other" },
-  ]);
-
+  const selectableOptions = selectableMinistryTypes();
   const [form] = Form.useForm();
   const dispatch = useDispatch();
 

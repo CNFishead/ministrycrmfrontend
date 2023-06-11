@@ -1,5 +1,6 @@
 @import "@/styles/globals.scss";
 .container {
+  position: relative;
   display: grid;
 
   grid-template-columns: 265px auto;
@@ -154,6 +155,7 @@
     background-color: var(--primary-light);
     height: 100%;
     grid-area: content;
+    position: relative;
 
     display: grid;
     grid-template-rows: 1fr;
@@ -218,28 +220,8 @@
     .childrenContainer {
       position: relative;
       padding: 20px;
-      background-color: var(--quaternary-lighter);
-      .dynamicBackgroundContainer {
-        padding: 0;
-        position: absolute;
-        z-index: 0;
-        // have the image thats passed in take up the entire container
-        width: 100%;
-        height: 100%;
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-        background-blend-mode: luminosity;
-        background-attachment: fixed;
-        // make the image slightly transparent
-        opacity: 0.35;
-        // blur the image
-        // filter: blur(5px);
-        object-fit: cover;
-        // ignore parent container padding
-        top: 0;
-        left: 0;
-      }
+      // make the background color lighter by 10%
+      background-color: var(--quaternary-lighter); /* Adjust the opacity value (0.8) as desired */
     }
   }
   @include desktop {

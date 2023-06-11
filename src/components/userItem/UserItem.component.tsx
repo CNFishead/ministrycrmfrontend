@@ -3,8 +3,9 @@ import React from "react";
 import styles from "./UserItem.module.scss";
 import { Avatar, Card, Divider } from "antd";
 import formatPhoneNumber from "@/utils/formatPhoneNumber";
+import MemberType from "@/types/MemberType";
 interface Props {
-  user: User;
+  user: MemberType;
 }
 
 const UserItem = (props: Props) => {
@@ -26,14 +27,18 @@ const UserItem = (props: Props) => {
             <p>
               <strong>Email Address:</strong> {props.user?.email}
             </p>
-            <div>
-              {props.user?.phoneNumber && (
-                <>
-                  <strong>Phone: </strong>
-                  {formatPhoneNumber(props.user?.phoneNumber)}
-                </>
-              )}
-            </div>
+            {props.user?.phoneNumber && (
+              <p>
+                <strong>Phone: </strong>
+                {formatPhoneNumber(props.user?.phoneNumber)}
+              </p>
+            )}
+            {props.user?.dateLastVisited && (
+              <p>
+                <strong>Last Visited: </strong>
+                {new Date(props.user?.dateLastVisited).toLocaleDateString()}
+              </p>
+            )}
           </div>
         </div>
       </div>

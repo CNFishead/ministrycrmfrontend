@@ -18,6 +18,6 @@ export default (loginData) => async (dispatch) => {
     // set the cookie
     document.cookie = `user=${JSON.stringify(data.user)}; path=/; max-age=${60 * 60 * 24 * 7}`;
   } catch (error) {
-    errorHandler(error, dispatch, USER_LOGIN_FAIL);
+    errorHandler(error, dispatch, USER_LOGIN_FAIL, true);
   }
 };

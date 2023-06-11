@@ -61,9 +61,9 @@ const SideBar = (props: Props) => {
         {!props.large && <p>Shepherds CMS</p>}
       </div>
 
-      {Object.values(navigation({ user })).map((item: any) => {
+      {Object.values(navigation({ user })).map((item: any, indx) => {
         return (
-          <>
+          <div key={indx + item.title}>
             {!item?.hidden && (
               <div key={item.title} className={`${styles.group}`}>
                 <>
@@ -91,7 +91,7 @@ const SideBar = (props: Props) => {
                 </>
               </div>
             )}
-          </>
+          </div>
         );
       })}
     </div>

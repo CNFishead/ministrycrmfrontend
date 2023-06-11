@@ -69,6 +69,8 @@ const PhotoUpload = (props: Props) => {
     }
   };
 
+  if (!user) return null;
+
   return (
     <>
       <Form.Item

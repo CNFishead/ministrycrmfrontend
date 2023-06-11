@@ -37,6 +37,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
     // also use the cookie, cause it could be there.
     if (!user) {
       const localStorageUser = localStorage.getItem("user") || cookie.parse(document.cookie).user;
+      console.log(localStorageUser);
       // set the user in store to the user object in localStorage
       store.dispatch({
         type: USER_LOGIN_SUCCESS,
@@ -45,6 +46,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
       setAuthToken(JSON.parse(localStorageUser).token);
     }
     if (!selectedMinistry.ministry) {
+      if (!user) return;
       const localStorageMinistry = localStorage.getItem("ministry");
 
       // set the ministry in store to the ministry object in localStorage

@@ -26,7 +26,7 @@ const SocketWrapper = (props) => {
 
   useEffect(() => {
     if (socket || isConnecting) return;
-    socketInitializer();
+    // socketInitializer();
   }, []);
 
   useEffect(() => {

@@ -77,7 +77,7 @@ const Auth = (props: Props) => {
                   name="password"
                   iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
                   // disalbe the browser from auto completing the password
-                  autoComplete="new-password"
+                  aria-autocomplete="none"
                 />
               </Form.Item>
             </div>

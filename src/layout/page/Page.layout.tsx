@@ -165,11 +165,10 @@ const Page = (props: Props) => {
                 </div>
               </>
             )}
-            <div className={styles.childrenContainer}>
-              <div className={styles.dynamicBackgroundContainer} style={{ backgroundImage: `url(${ministry?.ministryImageUrl})` }}></div>
-              <Alert />
-              {props.children}
-            </div>
+              <div className={styles.childrenContainer}>
+                <Alert />
+                {props.children}
+              </div>
           </div>
         </>
       </div>
