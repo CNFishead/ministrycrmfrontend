@@ -7,7 +7,7 @@ const nextConfig = {
     domains: ["localhost", ""],
   },
   env: {
-    API_URL: `https://api.shepherdcms.com/api/v1`,
+    API_URL: `https://api.shepherdcms.org/api/v1`,
     ENV: "production",
     // ENV: "development",
   },
