@@ -1,17 +1,18 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import styles from "./Alert.module.scss";
-import { Alert } from "antd";
+import { Alert as AntAlert } from "antd";
 
-
-export default () => {
+const Alert = () => {
   // App State
   const { alerts } = useSelector((state) => state.alert);
   return (
     <div className={styles.alertWrapper}>
       {alerts.map((alert) => (
-        <Alert key={alert.id} className={`alert`} type={alert.alertType} description={alert.message} showIcon />
+        <AntAlert key={alert.id} className={`alert`} type={alert.alertType} description={alert.message} showIcon />
       ))}
     </div>
   );
 };
+
+export default Alert;

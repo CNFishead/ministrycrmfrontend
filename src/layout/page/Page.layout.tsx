@@ -155,7 +155,7 @@ const Page = (props: Props) => {
             {props.controlNav && (
               <>
                 <div className={styles.controlContainer}>
-                  <Control navigation={props.controlNav} />
+                  <Control navigation={props.controlNav as any} />
                 </div>
                 <div
                   className={styles.controlToggleBtn}
