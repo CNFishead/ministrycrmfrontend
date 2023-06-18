@@ -56,11 +56,22 @@ export const navigation = (options?: any) => {
             },
           },
         },
+      },
+      hidden: options?.user ? false : true,
+    },
+    members: {
+      title: "Members",
+      links: {
         members: {
           title: "Members",
           link: "/members",
           icon: <BsFillPeopleFill />,
         },
+        families: {
+          title: "Families",
+          link: "/families",
+          icon: <BsFillPeopleFill />,
+        }
       },
       hidden: options?.user ? false : true,
     },

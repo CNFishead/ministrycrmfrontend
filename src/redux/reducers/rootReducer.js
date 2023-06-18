@@ -9,12 +9,14 @@ import socketRootReducer from "./socket/socketRootReducer";
 import { dynamicReducer } from "./dynamicReducer";
 import ministryRootReducer from "./ministry/ministryRootReducer";
 import memberRootReducer from "./member/memberRootReducer";
+import familyRootReducer from "./family/familyRootReducer";
 
 export const rootReducer = combineReducers({
   // Add reducers here
   alert: alertReducers,
   auth: authReducer,
   user: userRootReducers,
+  family: familyRootReducer,
   member: memberRootReducer,
   interface: interfaceRootReducers,
   feature: featureRootReducer,

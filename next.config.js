@@ -4,7 +4,7 @@ const nextConfig = {
   // set image domains
   images: {
     // localhost:5000
-    domains: ["localhost", ""],
+    domains: ["localhost", "api.shepherdcms.org"],
   },
   env: {
     API_URL: `https://api.shepherdcms.org/api/v1`,

@@ -31,11 +31,13 @@
       @include tablet {
         flex-direction: column;
       }
-      justify-content: space-between;
       .inputParent {
-        width: 48%;
+        width: 75%;
         @include tablet {
           width: 100%;
+        }
+        .input {
+          width: 95%;
         }
       }
     }
