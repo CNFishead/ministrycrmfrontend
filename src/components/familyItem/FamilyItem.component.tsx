@@ -3,7 +3,8 @@ import styles from "./FamilyItem.module.scss";
 import React from "react";
 import MemberType from "@/types/MemberType";
 import { Avatar, Card } from "antd";
-import Meta from "antd/es/card/Meta";
+
+const { Meta } = Card;
 
 interface FamilyItemProps {
   family: FamilyType;
