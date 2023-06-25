@@ -2,7 +2,7 @@ import FamilyType from "@/types/FamilyType";
 import styles from "./FamilyItem.module.scss";
 import React from "react";
 import MemberType from "@/types/MemberType";
-import { Avatar, Card } from "antd";
+import { Avatar, Card, Empty } from "antd";
 import Link from "next/link";
 
 const { Meta } = Card;
@@ -17,20 +17,31 @@ interface FamilyItemProps {
  * @returns
  */
 const FamilyItem = (props: FamilyItemProps) => {
-  return (
+  return (<Link href={`/families/${props.family?._id}`}>
     <Card
       className={styles.container}
       bordered={true}
       hoverable
-      style={{ width: "90%" }}
-      cover={props.family?.members.slice(0, 3).map((member: MemberType, index) => {
-        return <Avatar key={member._id} className={styles.avatar} src={member.profileImageUrl} alt={member.fullName} />;
-      })}
+      style={{ width: "95%" }}
+      cover={
+        props.family?.members.length > 0 ? (
+          props.family?.members.slice(0, 3).map((member: MemberType, index) => {
+            return (
+              <div className={styles.headerContainer} key={member._id}>
+              <Avatar.Group size={64} className={styles.avatarGroup}>
+                <Avatar src={member?.profileImageUrl} />
+              </Avatar.Group></div>
+            );
+          })
+        ) : (
+          <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="No Family Members" />
+        )
+      }
     >
-      <Link href={`/families/${props.family?._id}`}>
+      
         <Meta title={props.family?.name} description={`${props.family?.members.length} members`} />
-      </Link>
-    </Card>
+      
+    </Card></Link>
   );
 };
 
