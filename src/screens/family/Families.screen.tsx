@@ -37,7 +37,7 @@ const Families = () => {
       <SearchWrapper
         buttons={[
           {
-            toolTip: "Create new Ministry",
+            toolTip: "Create new Family",
             icon: <AiOutlinePlus className={styles.icon} />,
             onClick: () => {
               setModalOpen(true);
@@ -45,7 +45,7 @@ const Families = () => {
             type: "primary",
           },
         ]}
-        placeholder="Search for ministries"
+        placeholder="Search for Families"
         total={families?.length}
       >
         <CreateFamilyModal dispatch={dispatch} open={modalOpen} onClose={() => setModalOpen(false)} />

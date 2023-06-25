@@ -15,7 +15,7 @@ import getFamiliesAction from "@/redux/actions/family/getFamilies.action";
 const CreateNewMember = () => {
   const [form] = Form.useForm();
   const [timer, setTimer] = React.useState<any>(null); // timer for the search bar
-  const [createFamilyModal, setCreateFamilyModal] = React.useState(true);
+  const [createFamilyModal, setCreateFamilyModal] = React.useState<boolean>(false);
   const dispatch = useDispatch();
   const {
     selectedMinistry: { ministry },
@@ -37,7 +37,7 @@ const CreateNewMember = () => {
     clearTimeout(timer);
     setTimer(
       setTimeout(() => {
-        dispatch(getFamiliesAction({keyword: val}) as any);
+        dispatch(getFamiliesAction({ keyword: val }) as any);
       }, 1000) as any // wait 1000ms before searching
     );
   };

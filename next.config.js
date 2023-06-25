@@ -8,8 +8,8 @@ const nextConfig = {
   },
   env: {
     API_URL: `https://api.shepherdcms.org/api/v1`,
-    ENV: "production",
-    // ENV: "development",
+    // ENV: "production",
+    ENV: "development",
   },
 };
 

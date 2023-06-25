@@ -22,7 +22,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
   Router.events.on("routeChangeError", () => NProgress.done());
   // console.log(`App started in ${process.env.ENV} mode`);
 
-  const { user = {} as User } = store.getState().auth;
+  const { user } = store.getState().auth;
   const { selectedMinistry } = store.getState().ministry;
   useEffect(() => {
     NProgress.configure({
@@ -37,7 +37,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
     // also use the cookie, cause it could be there.
     if (!user) {
       const localStorageUser = localStorage.getItem("user") || cookie.parse(document.cookie).user;
-      console.log(localStorageUser);
+      // console.log(localStorageUser);
       // set the user in store to the user object in localStorage
       store.dispatch({
         type: USER_LOGIN_SUCCESS,
@@ -46,7 +46,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
       setAuthToken(JSON.parse(localStorageUser).token);
     }
     if (!selectedMinistry.ministry) {
-      if (!user) return;
+      // if (!user) return;
       const localStorageMinistry = localStorage.getItem("ministry");
 
       // set the ministry in store to the ministry object in localStorage
@@ -55,7 +55,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
         payload: JSON.parse(localStorageMinistry!),
       });
     }
-    setAuthToken(user.token);
+    // setAuthToken(user.token);
   }, [store, user, selectedMinistry]);
 
   return (

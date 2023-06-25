@@ -46,7 +46,7 @@ const SearchWrapper = (props: Props) => {
     return () => {
       dispatch({ type: SET_SEARCH, payload: "" });
       dispatch({ type: SET_PAGE_NUMBER, payload: 1 });
-      dispatch({ type: SET_PAGE_LIMIT, payload: 1 });
+      dispatch({ type: SET_PAGE_LIMIT, payload: 10 });
       dispatch({ type: REMOVE_FILTER });
     };
   }, []);

@@ -3,6 +3,7 @@ import styles from "./FamilyItem.module.scss";
 import React from "react";
 import MemberType from "@/types/MemberType";
 import { Avatar, Card } from "antd";
+import Link from "next/link";
 
 const { Meta } = Card;
 
@@ -21,12 +22,14 @@ const FamilyItem = (props: FamilyItemProps) => {
       className={styles.container}
       bordered={true}
       hoverable
-      style={{ width: '90%' }}
+      style={{ width: "90%" }}
       cover={props.family?.members.slice(0, 3).map((member: MemberType, index) => {
         return <Avatar key={member._id} className={styles.avatar} src={member.profileImageUrl} alt={member.fullName} />;
       })}
     >
-      <Meta title={props.family?.name} description={`${props.family?.members.length} members`} />
+      <Link href={`/families/${props.family?._id}`}>
+        <Meta title={props.family?.name} description={`${props.family?.members.length} members`} />
+      </Link>
     </Card>
   );
 };

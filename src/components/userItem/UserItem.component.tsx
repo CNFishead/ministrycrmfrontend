@@ -6,6 +6,7 @@ import formatPhoneNumber from "@/utils/formatPhoneNumber";
 import MemberType from "@/types/MemberType";
 interface Props {
   user: MemberType;
+  sm?: boolean;
 }
 
 const UserItem = (props: Props) => {
@@ -22,25 +23,27 @@ const UserItem = (props: Props) => {
             </div>
           </div>
         </div>
-        <div className={styles.miscInfoContainer}>
-          <div className={styles.miscInfo}>
-            <p>
-              <strong>Email Address:</strong> {props.user?.email}
-            </p>
-            {props.user?.phoneNumber && (
+        {props.sm && (
+          <div className={styles.miscInfoContainer}>
+            <div className={styles.miscInfo}>
               <p>
-                <strong>Phone: </strong>
-                {formatPhoneNumber(props.user?.phoneNumber)}
+                <strong>Email Address:</strong> {props.user?.email}
               </p>
-            )}
-            {props.user?.dateLastVisited && (
-              <p>
-                <strong>Last Visited: </strong>
-                {new Date(props.user?.dateLastVisited).toLocaleDateString()}
-              </p>
-            )}
+              {props.user?.phoneNumber && (
+                <p>
+                  <strong>Phone: </strong>
+                  {formatPhoneNumber(props.user?.phoneNumber)}
+                </p>
+              )}
+              {props.user?.dateLastVisited && (
+                <p>
+                  <strong>Last Visited: </strong>
+                  {new Date(props.user?.dateLastVisited).toLocaleDateString()}
+                </p>
+              )}
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );
