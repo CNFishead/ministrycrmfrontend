@@ -25,14 +25,13 @@ const FamilyItem = (props: FamilyItemProps) => {
       style={{ width: "95%" }}
       cover={
         props.family?.members.length > 0 ? (
-          props.family?.members.slice(0, 3).map((member: MemberType, index) => {
+          <Avatar.Group size={64} className={styles.avatarGroup}>
+          {props.family?.members.slice(0, 3).map((member: MemberType, index) => {
             return (
-              <div className={styles.headerContainer} key={member._id}>
-              <Avatar.Group size={64} className={styles.avatarGroup}>
-                <Avatar src={member?.profileImageUrl} />
-              </Avatar.Group></div>
+                <Avatar src={member?.profileImageUrl} key={member._id}/>
             );
-          })
+          })}
+          </Avatar.Group>
         ) : (
           <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="No Family Members" />
         )

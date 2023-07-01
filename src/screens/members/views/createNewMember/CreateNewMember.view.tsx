@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import styles from "./CreateNewMember.module.scss";
-import { Card, Col, DatePicker, Divider, Form, Input, InputNumber, Radio, Row, Select, Tooltip } from "antd";
+import { Button, Card, Col, DatePicker, Divider, Form, Input, InputNumber, Radio, Row, Select, Tooltip } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import createMember from "@/redux/actions/member/createMember";
@@ -11,9 +11,11 @@ import Link from "next/link";
 import CreateFamilyModal from "@/screens/family/modal/CreateFamilyModal.modal";
 import FamilyType from "@/types/FamilyType";
 import getFamiliesAction from "@/redux/actions/family/getFamilies.action";
+import { useRouter } from "next/router";
 
 const CreateNewMember = () => {
   const [form] = Form.useForm();
+  const router = useRouter();
   const [timer, setTimer] = React.useState<any>(null); // timer for the search bar
   const [createFamilyModal, setCreateFamilyModal] = React.useState<boolean>(false);
   const dispatch = useDispatch();
@@ -21,7 +23,9 @@ const CreateNewMember = () => {
     selectedMinistry: { ministry },
     mainMinistry: { ministry: mainMinistry },
   } = useSelector((state: RootState) => state.ministry);
-
+  const {
+    createMember: { success: createSuccess },
+  } = useSelector((state: RootState) => state.member);
   const {
     listFamilies: { families, loading },
   } = useSelector((state: RootState) => state.family);
@@ -29,6 +33,11 @@ const CreateNewMember = () => {
     // ministry, if their isnt a selectedMinistry, then use the mainMinistry
     const ministryId = ministry ? ministry._id : mainMinistry._id;
     dispatch(createMember({ ...values, ministry: ministryId }) as any);
+    if(createSuccess && createSuccess !== null) {
+      form.resetFields();
+      // go back to the members page
+      router.push("/members");
+    }
   };
 
   const onSearch = (val: string) => {
@@ -251,6 +260,13 @@ const CreateNewMember = () => {
                 <Radio value={false}>Inactive</Radio>
               </Radio.Group>
             </Form.Item>
+          </Col>
+        </Row>
+        <Row className={styles.buttonContainer}>
+          <Col span={24}>
+            <Button type="primary" htmlType="submit" className={styles.button}>
+              Submit
+            </Button>
           </Col>
         </Row>
       </Form>

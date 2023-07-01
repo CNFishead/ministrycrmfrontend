@@ -39,23 +39,29 @@ export default function MyApp({ Component, pageProps }: AppProps) {
       const localStorageUser = localStorage.getItem("user") || cookie.parse(document.cookie).user;
       // console.log(localStorageUser);
       // set the user in store to the user object in localStorage
-      store.dispatch({
-        type: USER_LOGIN_SUCCESS,
-        payload: JSON.parse(localStorageUser),
-      });
-      setAuthToken(JSON.parse(localStorageUser).token);
+      if (localStorageUser) {
+        store.dispatch({
+          type: USER_LOGIN_SUCCESS,
+          payload: JSON.parse(localStorageUser),
+        });
+        setAuthToken(JSON.parse(localStorageUser).token);
+      }
     }
     if (!selectedMinistry.ministry) {
       // if (!user) return;
       const localStorageMinistry = localStorage.getItem("ministry");
 
       // set the ministry in store to the ministry object in localStorage
-      store.dispatch({
-        type: MAIN_MINISTRY_SUCCESS,
-        payload: JSON.parse(localStorageMinistry!),
-      });
+      if (localStorageMinistry) {
+        store.dispatch({
+          type: MAIN_MINISTRY_SUCCESS,
+          payload: JSON.parse(localStorageMinistry!),
+        });
+      }
     }
-    // setAuthToken(user.token);
+    if (user) {
+      setAuthToken(user.token);
+    }
   }, [store, user, selectedMinistry]);
 
   return (

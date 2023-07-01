@@ -14,6 +14,7 @@ const Families = () => {
   const [modalOpen, setModalOpen] = React.useState(false);
   const dispatch = useDispatch();
 
+  const { user } = useSelector((state: RootState) => state.auth);
   const {
     listFamilies: { families, loading },
   } = useSelector((state: RootState) => state.family);
@@ -23,6 +24,7 @@ const Families = () => {
   } = useSelector((state: RootState) => state.interface);
 
   React.useEffect(() => {
+    if (!user) return;
     dispatch(
       getFamiliesAction({
         keyword: search,
