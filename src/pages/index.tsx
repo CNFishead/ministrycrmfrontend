@@ -7,6 +7,7 @@ import cookie from "cookie";
 import { useSelector } from "react-redux";
 import { default as HomeScreen } from "@/screens/home/Home.Screen";
 import React from "react";
+import axios from "@/utils/axios";
 
 interface Props {
   isAuthenticated: boolean;
@@ -24,14 +25,15 @@ export default function Home(props: Props) {
 // use server side props to set the user in the store
 export const getServerSideProps = async (ctx: any) => {
   // check the cookie for a user object if it exists dispatch a login action
+  // pull the token out if there is one
+  const token = ctx.query.token;
   const cookies = cookie.parse(ctx.req.headers.cookie || "");
   const user = cookies.user;
-  // console.log(`user: ${user}`);
   if (!user) {
     // if the necessary data is not found in the cookie, redirect the user to the login page
     return {
       redirect: {
-        destination: "/auth/login",
+        destination: token ? `/auth/login?token=${token}` : "/auth/login",
         permanent: false,
       },
     };

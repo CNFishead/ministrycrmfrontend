@@ -38,6 +38,9 @@ type Props = {
     image?: string;
   };
   view?: string;
+  // container if for css, if the page should have padding or not
+  // default true
+  container?: boolean;
 };
 
 const Page = (props: Props) => {
@@ -165,15 +168,20 @@ const Page = (props: Props) => {
                 </div>
               </>
             )}
-              <div className={styles.childrenContainer}>
-                <Alert />
-                {props.children}
-              </div>
+            <div className={`${styles.childrenContainer} ${!props.container && styles.noContainer}`}>
+              <Alert />
+              {props.children}
+            </div>
           </div>
         </>
       </div>
     </>
   );
+};
+
+// set the default props, if they are not passed in
+Page.defaultProps = {
+  container: true,
 };
 
 export default Page;

@@ -223,6 +223,10 @@
       // make the background color lighter by 10%
       background-color: var(--quaternary-lighter); /* Adjust the opacity value (0.8) as desired */
     }
+
+    .childrenContainer, .noContainer{
+      padding: 0;
+    }
   }
   @include desktop {
     @include tablet {

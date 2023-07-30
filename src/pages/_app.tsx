@@ -14,6 +14,7 @@ import cookie from "cookie";
 import User from "@/types/User";
 import { MAIN_MINISTRY_SUCCESS, SELECT_MINISTRY_SUCCESS } from "@/redux/constants/ministryConstants";
 import Ministry from "@/types/Ministry";
+import { ConfigProvider } from "antd";
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   // show progress bar on route change
@@ -66,9 +67,18 @@ export default function MyApp({ Component, pageProps }: AppProps) {
 
   return (
     <ReduxProvider store={store}>
-      <SocketWrapper>
-        <Component {...pageProps} />
-      </SocketWrapper>
+      <ConfigProvider
+        theme={{
+          token: {
+            colorPrimary: "rgb(60, 98, 85)",
+            colorText: "rgb(92, 138, 122)",
+          },
+        }}
+      >
+        <SocketWrapper>
+          <Component {...pageProps} />
+        </SocketWrapper>
+      </ConfigProvider>
     </ReduxProvider>
   );
 }
