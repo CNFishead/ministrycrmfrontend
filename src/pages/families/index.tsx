@@ -10,7 +10,7 @@ export default function MembersScreen() {
   // get the size of the screen using react-responsive useMediaQuery hook
   const isMobile = useMediaQuery({ query: "(max-width: 1024px)" });
   return (
-    <PageLayout pages={[navigation().members.links.families]} largeSideBar={isMobile}>
+    <PageLayout pages={[navigation().members.links.families]} largeSideBar={isMobile} container={true}>
       <Families />
     </PageLayout>
   );

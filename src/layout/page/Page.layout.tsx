@@ -168,7 +168,7 @@ const Page = (props: Props) => {
                 </div>
               </>
             )}
-            <div className={`${styles.childrenContainer} ${!props.container && styles.noContainer}`}>
+            <div className={`${styles.childrenContainer} ${!props.container ? styles.noContainer : ""}`}>
               <Alert />
               {props.children}
             </div>

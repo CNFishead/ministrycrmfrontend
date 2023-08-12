@@ -1,6 +1,7 @@
 import { GET_MEMBERS_FAILURE, GET_MEMBERS_REQUEST, GET_MEMBERS_SUCCESS } from "@/redux/constants/memberConstants";
 import axios from "@/utils/axios";
 import { errorHandler } from "@/utils/errorHandler";
+import { get } from "http";
 
 export default (options: {
     keyword?: string;
@@ -10,8 +11,10 @@ export default (options: {
     filter?: string[] | [];
     ministryId?: string;
   }) =>
-  async (dispatch: any) => {
+  async (dispatch: any, getState: any) => {
     try {
+      // check if we are already fetching members
+      if (getState().member.membersList.loading) return;
       dispatch({
         type: GET_MEMBERS_REQUEST,
       });

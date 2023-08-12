@@ -8,7 +8,7 @@ import CreateNewMember from "./modal/CreateNewMember.modal";
 import getMembers from "@/redux/actions/member/getMembers";
 import MemberType from "@/types/MemberType";
 import UserItem from "@/components/userItem/UserItem.component";
-import { Skeleton } from "antd";
+import { Avatar, Skeleton, Table } from "antd";
 
 const Members = () => {
   const [modalOpen, setModalOpen] = React.useState(false);
@@ -81,20 +81,67 @@ const Members = () => {
         }
       >
         <div className={styles.contentContainer}>
-          <div className={styles.header}>
-            <p className={styles.headerText}>
-              Viewing members for <span className={styles.ministryName}>{ministry ? ministry?.name : mainMinistry?.name}</span>
-            </p>
-          </div>
-          {loading ? (
-            <Skeleton active />
-          ) : (
-            <div className={styles.memberContainer}>
-              {members?.map((member: MemberType) => (
-                <UserItem key={member?._id} user={member} />
-              ))}
-            </div>
-          )}
+          <Table
+            className={styles.table}
+            dataSource={members}
+            loading={loading}
+            rowKey={(record: MemberType) => record._id}
+            columns={[
+              {
+                title: "",
+                dataIndex: "profileImageUrl",
+                key: "profileImageUrl",
+                render: (text: string, record: MemberType) => {
+                  return <Avatar src={text} size={64} />;
+                },
+              },
+              {
+                title: "Name",
+                dataIndex: "fullName",
+                key: "fullName",
+              },
+              {
+                title: "Family",
+                // we want the family name, family is an object containing the family id and name
+                dataIndex: ["family", "name"],
+                key: "family",
+              },
+              {
+                title: "Email",
+                dataIndex: "email",
+                key: "email",
+              },
+              {
+                title: "Phone",
+                dataIndex: "phone",
+                key: "phone",
+              },
+              {
+                title: "Address",
+                dataIndex: "address",
+                key: "address",
+              },
+              {
+                title: "Sex",
+                dataIndex: "sex",
+                key: "sex",
+              },
+              {
+                title: "role",
+                dataIndex: "role",
+                key: "role",
+              },
+              {
+                title: "is Child",
+                dataIndex: "isChild",
+                key: "isChild",
+                render: (text: boolean) => {
+                  return text ? "Yes" : "No";
+                },
+              },
+            ]}
+            pagination={false}
+          />
         </div>
       </SearchWrapper>
     </div>

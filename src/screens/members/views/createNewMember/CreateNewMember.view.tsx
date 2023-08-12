@@ -12,6 +12,7 @@ import CreateFamilyModal from "@/screens/family/modal/CreateFamilyModal.modal";
 import FamilyType from "@/types/FamilyType";
 import getFamiliesAction from "@/redux/actions/family/getFamilies.action";
 import { useRouter } from "next/router";
+import { CREATE_MEMBER_RESET } from "@/redux/constants/memberConstants";
 
 const CreateNewMember = () => {
   const [form] = Form.useForm();
@@ -33,11 +34,6 @@ const CreateNewMember = () => {
     // ministry, if their isnt a selectedMinistry, then use the mainMinistry
     const ministryId = ministry ? ministry._id : mainMinistry._id;
     dispatch(createMember({ ...values, ministry: ministryId }) as any);
-    if(createSuccess && createSuccess !== null) {
-      form.resetFields();
-      // go back to the members page
-      router.push("/members");
-    }
   };
 
   const onSearch = (val: string) => {
@@ -50,6 +46,13 @@ const CreateNewMember = () => {
       }, 1000) as any // wait 1000ms before searching
     );
   };
+
+  React.useEffect(() => {
+    if (createSuccess) {
+      dispatch({ type: CREATE_MEMBER_RESET });
+      router.push("/members");
+    }
+  }, [createSuccess]);
   return (
     <div className={styles.container}>
       <CreateFamilyModal dispatch={dispatch} open={createFamilyModal} onClose={() => setCreateFamilyModal(false)} />
