@@ -12,11 +12,16 @@ import CreateFamilyModal from "@/screens/family/modal/CreateFamilyModal.modal";
 import FamilyType from "@/types/FamilyType";
 import getFamiliesAction from "@/redux/actions/family/getFamilies.action";
 import { useRouter } from "next/router";
-import { CREATE_MEMBER_RESET } from "@/redux/constants/memberConstants";
+import { CREATE_MEMBER_RESET, GET_MEMBER_RESET } from "@/redux/constants/memberConstants";
+import getMember from "@/redux/actions/member/getMember";
+import updateMember from "@/redux/actions/member/updateMember";
+import moment from "moment";
 
 const CreateNewMember = () => {
   const [form] = Form.useForm();
   const router = useRouter();
+  const { id } = router.query;
+
   const [timer, setTimer] = React.useState<any>(null); // timer for the search bar
   const [createFamilyModal, setCreateFamilyModal] = React.useState<boolean>(false);
   const dispatch = useDispatch();
@@ -26,11 +31,18 @@ const CreateNewMember = () => {
   } = useSelector((state: RootState) => state.ministry);
   const {
     createMember: { success: createSuccess },
+    memberDetails: { member },
+    memberUpdate: { success: updateSuccess },
   } = useSelector((state: RootState) => state.member);
   const {
     listFamilies: { families, loading },
   } = useSelector((state: RootState) => state.family);
   const onFinish = (values: any) => {
+    if (id) {
+      // if the id exists, then we are updating the member
+      dispatch(updateMember(id as string, { member: form.getFieldsValue() }) as any);
+      return;
+    }
     // ministry, if their isnt a selectedMinistry, then use the mainMinistry
     const ministryId = ministry ? ministry._id : mainMinistry._id;
     dispatch(createMember({ ...values, ministry: ministryId }) as any);
@@ -52,7 +64,23 @@ const CreateNewMember = () => {
       dispatch({ type: CREATE_MEMBER_RESET });
       router.push("/members");
     }
-  }, [createSuccess]);
+    if (id) {
+      // dispatch action to get the member details
+      dispatch(getMember(id as string) as any);
+    }
+  }, [createSuccess, updateSuccess]);
+
+  useEffect(() => {
+    if (member) {
+      form.setFieldsValue({ ...member, birthday: moment(member.birthday)});
+    }
+  }, [member]);
+
+  useEffect(() => {
+    return () => {
+      dispatch({ type: GET_MEMBER_RESET });
+    };
+  }, []);
   return (
     <div className={styles.container}>
       <CreateFamilyModal dispatch={dispatch} open={createFamilyModal} onClose={() => setCreateFamilyModal(false)} />
@@ -79,7 +107,7 @@ const CreateNewMember = () => {
               <Tooltip title={`Easily identify Members from their profile photo!`}>Profile Photo</Tooltip>
             </Divider>
           </Col>
-          <Col span={8}>
+          <Col span={8} lg={6}>
             <div className={styles.imageUploadContainer}>
               <div className={styles.imageContainer}>
                 <PhotoUpload
@@ -142,8 +170,14 @@ const CreateNewMember = () => {
             </Form.Item>
           </Col>
           <Col span={8} lg={6} className={styles.inputParent}>
-            <Form.Item name="birthday" label="Birthday">
-              <DatePicker placeholder="Birthday" className={styles.input} />
+            <Form.Item label="Birthday" name="birthday">
+              <DatePicker
+                placeholder="Birthday"
+                className={styles.input}
+                name="birthday"
+                // allow the user to type in the date
+                format={"MM/DD/YYYY"}
+              />
             </Form.Item>
           </Col>
           <Col span={8} lg={6} className={styles.inputParent}>
@@ -151,7 +185,7 @@ const CreateNewMember = () => {
               <Input type="text" placeholder="example@test.com" className={styles.input} />
             </Form.Item>
           </Col>
-          <Col span={8} className={styles.inputParent}>
+          <Col span={8} lg={6} className={styles.inputParent}>
             <Form.Item name="sex" label="Sex">
               <Select placeholder="Sex/Gender" className={styles.input}>
                 <Select.Option value="male">Male</Select.Option>
@@ -159,7 +193,7 @@ const CreateNewMember = () => {
               </Select>
             </Form.Item>
           </Col>
-          <Col span={8} className={styles.inputParent}>
+          <Col span={8} lg={6} className={styles.inputParent}>
             <Form.Item name="phoneNumber" label="Phone Number">
               <InputNumber
                 className={styles.input}
@@ -179,7 +213,7 @@ const CreateNewMember = () => {
               />
             </Form.Item>
           </Col>
-          <Col span={8} className={styles.inputParent}>
+          <Col span={8} lg={6} className={styles.inputParent}>
             <Form.Item name="maritalStatus" label="Marital Status">
               <Select placeholder="Marital Status" className={styles.input}>
                 <Select.Option value="single">Single</Select.Option>
@@ -189,28 +223,44 @@ const CreateNewMember = () => {
               </Select>
             </Form.Item>
           </Col>
+          <Col span={8} lg={6} className={styles.inputParent}>
+            <Tooltip
+              title="Tags are used to help you organize your members. You can use tags to filter members in the members page. You can also use tags to help denote special information about a member. For example, you can create a tag called 'Baptized' and add it to all members who have been baptized. Then you can filter members by the 'Baptized' tag to see all members who have been baptized."
+              placement="topLeft"
+            >
+              <Form.Item name="tags" label="Tags/Hobbies" help="values are ( , ) seperated">
+                <Select
+                  mode="tags"
+                  placeholder="Tags"
+                  className={styles.input}
+                  tokenSeparators={[","]}
+                  filterOption={(input: string, option: any) => (option?.label ?? "").toLowerCase().includes(input.toLowerCase())}
+                />
+              </Form.Item>
+            </Tooltip>
+          </Col>
         </Row>
         <Row className={styles.nameContainer}>
           {/* address information */}
           <Col span={24}>
             <Divider orientation="center">Address Information</Divider>
           </Col>
-          <Col span={8} className={styles.inputParent}>
+          <Col span={8} lg={6} className={styles.inputParent}>
             <Form.Item name={["location", "address"]} label="Address">
               <Input type="text" placeholder="Address" className={styles.input} />
             </Form.Item>
           </Col>
-          <Col span={8} className={styles.inputParent}>
+          <Col span={8} lg={6} className={styles.inputParent}>
             <Form.Item name={["location", "address2"]} label="Address Cont.">
               <Input type="text" placeholder="Address Continued" className={styles.input} />
             </Form.Item>
           </Col>
-          <Col span={8} className={styles.inputParent}>
+          <Col span={8} lg={6} className={styles.inputParent}>
             <Form.Item name={["location", "city"]} label="City">
               <Input type="text" placeholder="City" className={styles.input} />
             </Form.Item>
           </Col>
-          <Col span={8} className={styles.inputParent}>
+          <Col span={8} lg={6} className={styles.inputParent}>
             <Form.Item name={["location", "state"]} label="State">
               <Select
                 placeholder="State"
@@ -222,12 +272,12 @@ const CreateNewMember = () => {
               ></Select>
             </Form.Item>
           </Col>
-          <Col span={8} className={styles.inputParent}>
+          <Col span={8} lg={6} className={styles.inputParent}>
             <Form.Item name={["location", "zipCode"]} label="Zip Code">
               <Input type="text" placeholder="Zip Code" className={styles.input} />
             </Form.Item>
           </Col>
-          <Col span={8} className={styles.inputParent}>
+          <Col span={8} lg={6} className={styles.inputParent}>
             <Form.Item name={["location", "country"]} label="Country">
               <Select
                 placeholder="Country"
@@ -265,12 +315,12 @@ const CreateNewMember = () => {
             </Form.Item>
           </Col>
         </Row>
-        <Row className={styles.buttonContainer}>
-          <Col span={24}>
-            <Button type="primary" htmlType="submit" className={styles.button}>
-              Submit
-            </Button>
-          </Col>
+        <Row className={styles.buttonContainer} justify={"center"}>
+          {/* <Col span={24}> */}
+          <Button type="primary" htmlType="submit" className={styles.button}>
+            {id ? "Update Member" : "Create Member"}
+          </Button>
+          {/* </Col> */}
         </Row>
       </Form>
     </div>

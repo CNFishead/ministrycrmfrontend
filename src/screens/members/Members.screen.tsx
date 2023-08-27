@@ -8,7 +8,9 @@ import CreateNewMember from "./modal/CreateNewMember.modal";
 import getMembers from "@/redux/actions/member/getMembers";
 import MemberType from "@/types/MemberType";
 import UserItem from "@/components/userItem/UserItem.component";
-import { Avatar, Skeleton, Table } from "antd";
+import { Avatar, Button, Skeleton, Table } from "antd";
+import { FaEdit, FaTrash } from "react-icons/fa";
+import Link from "next/link";
 
 const Members = () => {
   const [modalOpen, setModalOpen] = React.useState(false);
@@ -85,6 +87,7 @@ const Members = () => {
             className={styles.table}
             dataSource={members}
             loading={loading}
+            size="small"
             rowKey={(record: MemberType) => record._id}
             columns={[
               {
@@ -113,13 +116,31 @@ const Members = () => {
               },
               {
                 title: "Phone",
-                dataIndex: "phone",
+                dataIndex: "phoneNumber",
                 key: "phone",
+                render: (text: string) => {
+                  // format the phone number
+                  if (!text) return null;
+                  // if the string has an 11th character, it is a country code
+                  if (text.length === 11) {
+                    return text.replace(/(\d{1})(\d{3})(\d{3})(\d{4})/, "+$1 ($2) $3-$4");
+                  }
+                  // otherwise, it is a US number
+                  return text.replace(/(\d{3})(\d{3})(\d{4})/, "$1-$2-$3");
+                },
               },
               {
                 title: "Address",
-                dataIndex: "address",
+                dataIndex: "location",
                 key: "address",
+                render: (text: { address: string; address2: string; city: string; state: string; country: string; zipCode: string }) => {
+                  // location is an object containing the address city and state of the member
+                  // return as a string with the city and state
+                  // return all information that is not null or undefined
+                  return `${text?.address ? text?.address : ""} ${text.address2 ? text.address2 : ""} ${text.city ? `${text.city},` : ""} ${
+                    text.state ? text.state : ""
+                  } ${text.zipCode ? text.zipCode : ""}`.trim();
+                },
               },
               {
                 title: "Sex",
@@ -127,16 +148,43 @@ const Members = () => {
                 key: "sex",
               },
               {
-                title: "role",
+                title: "Role",
                 dataIndex: "role",
                 key: "role",
               },
               {
-                title: "is Child",
+                title: "Birthday",
+                dataIndex: "birthday",
+                key: "birthday",
+                render: (text: string) => {
+                  return new Date(text).toLocaleDateString();
+                },
+              },
+              {
+                title: "Child",
                 dataIndex: "isChild",
                 key: "isChild",
                 render: (text: boolean) => {
                   return text ? "Yes" : "No";
+                },
+              },
+              {
+                title: "Actions",
+                dataIndex: "actions",
+                key: "actions",
+                render: (text: string, record: MemberType) => {
+                  return (
+                    <div className={styles.actions}>
+                      <Link href={`/members/edit/${record._id}`}>
+                        <Button>
+                          <FaEdit />
+                        </Button>
+                      </Link>
+                      <Button>
+                        <FaTrash />
+                      </Button>
+                    </div>
+                  );
                 },
               },
             ]}

@@ -1,4 +1,4 @@
-import { GET_MEMBERS_FAILURE, GET_MEMBERS_REQUEST, GET_MEMBERS_SUCCESS } from "@/redux/constants/memberConstants";
+import { GET_MEMBERS_FAILURE, GET_MEMBERS_REQUEST, GET_MEMBERS_RESET, GET_MEMBERS_SUCCESS } from "@/redux/constants/memberConstants";
 import MemberType from "@/types/MemberType";
 
 interface IGetMembersState {
@@ -19,7 +19,9 @@ export default (state = {} as IGetMembersState, action: any) => {
       return { loading: false, success: true, members: action.payload };
     case GET_MEMBERS_FAILURE:
       return { loading: false, error: action.payload };
+    case GET_MEMBERS_RESET:
+      return {};
     default:
       return state;
   }
-}
+};
